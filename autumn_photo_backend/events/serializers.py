@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Event
 from accounts.models import User
+from photos.models import Photo
 
 class CoordinatorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,8 +17,8 @@ class EventSerializer(serializers.ModelSerializer):
         write_only=True
     )
 
-    
     cover = serializers.SerializerMethodField()
+    cover_upload = serializers.ImageField(write_only=True, required=False)
 
     class Meta:
         model = Event
@@ -37,6 +38,7 @@ class EventSerializer(serializers.ModelSerializer):
             'created_by',
             'coordinators',
             'coordinator_ids',
+            'cover_upload',
         ]
         read_only_fields = ['id', 'created_at', 'created_by']
 
@@ -56,3 +58,25 @@ class EventSerializer(serializers.ModelSerializer):
             return photo.original_file.url
 
         return None
+
+    def update(self, instance, validated_data):
+        cover_upload = validated_data.pop('cover_upload', None)
+        
+        # Update regular fields
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        
+        # Handle cover photo upload
+        if cover_upload:
+            # Create a new Photo object for the cover
+            photo = Photo.objects.create(
+                event=instance,
+                uploader=self.context['request'].user,
+                original_file=cover_upload,
+                display_file=cover_upload,
+                thumbnail_file=cover_upload,
+            )
+            instance.cover_photo = photo
+        
+        instance.save()
+        return instance
