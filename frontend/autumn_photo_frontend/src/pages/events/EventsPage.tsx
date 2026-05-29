@@ -137,8 +137,11 @@ export default function EventsPage() {
       if (editEndDatetime) form.append("end_datetime", editEndDatetime);
       form.append("location", editLocation);
       form.append("is_public", editIsPublic ? "true" : "false");
-      if (editCover) form.append("cover_upload", editCover);
+      if (editCover) {
+        form.append("cover_upload", editCover);
+      }
 
+      // axios automatically handles multipart/form-data when FormData is passed
       await axios.patch(`/events/${editingEvent.id}/`, form);
       setLoading(false);
       closeEditModal();
