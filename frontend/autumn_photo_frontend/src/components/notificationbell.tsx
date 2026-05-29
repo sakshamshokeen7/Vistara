@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
   getNotifications,
   markNotificationRead,
-  PaginatedNotifications,
+  type PaginatedNotifications,
 } from "../services/notificationService";
 import { useNotificationSocket } from "../utils/useNotificationsocket";
 
