@@ -49,7 +49,9 @@ export default function EventsPage() {
   const fetchEvents = async (query = "") => {
     try {
       const res = await axios.get(`/events/?search=${query}`);
-      setEvents(res.data);
+      // Handle paginated response
+      const eventsList = res.data.results || res.data;
+      setEvents(eventsList);
     } catch (e) {
       console.log(e);
     }
@@ -85,7 +87,9 @@ export default function EventsPage() {
         setSearchQuery(query);
       } else {
         const eventsRes = await axios.get(`/events/?search=${encodeURIComponent(query)}`);
-        setEvents(eventsRes.data || []);
+        // Handle paginated response
+        const eventsList = eventsRes.data.results || eventsRes.data;
+        setEvents(eventsList || []);
         setSearchMode("events");
         setSearchQuery("");
       }
