@@ -48,6 +48,13 @@ export default function NotificationBell() {
 
   const handleLoadMore = () => {
     loadNotifications(currentPage + 1);
+    // Scroll to bottom of notification list after loading more
+    setTimeout(() => {
+      const notificationDropdown = document.querySelector(".notification-dropdown");
+      if (notificationDropdown) {
+        notificationDropdown.scrollTop = notificationDropdown.scrollHeight;
+      }
+    }, 100);
   };
 
   useNotificationSocket((data) => {
@@ -79,7 +86,7 @@ export default function NotificationBell() {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-3 w-80 bg-slate-900 text-white rounded shadow-xl z-50 max-h-96 overflow-y-auto">
+        <div className="notification-dropdown absolute right-0 mt-3 w-80 bg-slate-900 text-white rounded shadow-xl z-50 max-h-96 overflow-y-auto">
           {notifications.length === 0 && (
             <div className="p-3 text-gray-400">No notifications</div>
           )}
