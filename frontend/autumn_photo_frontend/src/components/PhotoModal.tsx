@@ -27,7 +27,8 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
   const [tagUser, setTagUser] = useState("");
   const [copied, setCopied] = useState(false);
   const [downloading, setDownloading] = useState(false);
-  
+  const [replyingTo, setReplyingTo] = useState<number | null>(null);
+  const [replyText, setReplyText] = useState("");
 
   const fetchDetail = async () => {
     try {
@@ -57,8 +58,12 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
   useEffect(() => {
     fetchDetail();
     fetchComments();
-    const t = setInterval(fetchDetail, 3000);
-    return () => clearInterval(t);
+    const detailInterval = setInterval(fetchDetail, 3000);
+    const commentsInterval = setInterval(fetchComments, 1500);
+    return () => {
+      clearInterval(detailInterval);
+      clearInterval(commentsInterval);
+    };
   }, [photoId]);
 
   const toggleLike = async (e?: React.MouseEvent) => {
@@ -115,6 +120,34 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
     }
   };
 
+  const addReply = async (e?: React.MouseEvent<HTMLButtonElement>) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (!replyText.trim() || !replyingTo) {
+      console.log("Reply is empty or no parent comment selected");
+      return;
+    }
+    try {
+      console.log("Sending reply to comment:", replyingTo);
+      const res = await axios.post(`/photos/${photoId}/comments/add/`, { 
+        text: replyText,
+        parent_comment_id: replyingTo
+      });
+      console.log("Reply added successfully:", res.data);
+      if (res.status === 201 || res.status === 200) {
+        setReplyText("");
+        setReplyingTo(null);
+        await fetchComments();
+        await fetchDetail();
+      }
+    } catch (error: any) {
+      console.error("Failed to add reply:", error);
+      alert("Failed to add reply: " + (error.response?.data?.detail || error.message));
+    }
+  };
+
  const tagPerson = async () => {
   if (!tagUser.trim()) return;
   try {
@@ -127,6 +160,34 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
     console.error(e);
   }
 };
+
+  const renderCommentTree = (comment: any, level = 0) => {
+    return (
+      <div key={comment.id}>
+        <div 
+          style={{ marginLeft: `${level * 16}px` }} 
+          className="p-2 bg-gray-800 rounded text-sm mb-2 border-l-2 border-blue-500"
+        >
+          <div className="font-semibold text-xs flex justify-between items-start">
+            <span>{comment.user_name}</span>
+            <span className="text-gray-400 text-xs">{new Date(comment.created_at).toLocaleString()}</span>
+          </div>
+          <div className="mt-1">{comment.text}</div>
+          <button
+            onClick={() => setReplyingTo(comment.id)}
+            className="text-xs text-blue-400 hover:text-blue-300 mt-1 font-medium"
+          >
+            Reply
+          </button>
+        </div>
+        {comment.replies && comment.replies.length > 0 && (
+          <div>
+            {comment.replies.map((reply: any) => renderCommentTree(reply, level + 1))}
+          </div>
+        )}
+      </div>
+    );
+  };
 
 
 
@@ -228,14 +289,25 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
 
             <div>
               <div className="font-medium mb-2">Comments</div>
-              <div className="max-h-40 overflow-y-auto mb-2 space-y-2">
-                {comments.length ? comments.map((c)=> (
-                  <div key={c.id} className="p-2 bg-gray-800 rounded text-sm">
-                    <div className="font-semibold text-xs">{c.user_name}</div>
-                    <div>{c.text}</div>
-                  </div>
-                )) : <div className="text-gray-400 text-sm">No comments yet</div>}
+              <div className="max-h-80 overflow-y-auto mb-2">
+                {comments.length ? comments.map((c)=> renderCommentTree(c)) : <div className="text-gray-400 text-sm">No comments yet</div>}
               </div>
+
+              {replyingTo && (
+                <div className="mb-2 p-2 bg-gray-700 rounded border-l-2 border-blue-500">
+                  <div className="text-xs text-gray-300 mb-1">Replying to comment #{replyingTo}</div>
+                  <div className="flex gap-2">
+                    <input 
+                      value={replyText} 
+                      onChange={(e) => setReplyText(e.target.value)} 
+                      placeholder="Write your reply..." 
+                      className="flex-1 p-2 bg-gray-800 rounded text-sm" 
+                    />
+                    <button type="button" onClick={(e) => addReply(e)} className="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded font-medium transition-colors text-sm">Reply</button>
+                    <button type="button" onClick={() => { setReplyingTo(null); setReplyText(""); }} className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded font-medium transition-colors text-sm">Cancel</button>
+                  </div>
+                </div>
+              )}
 
               <div className="flex gap-2">
                 <input value={newComment} onChange={(e)=>setNewComment(e.target.value)} placeholder="Add a comment" className="flex-1 p-2 bg-gray-800 rounded" />
