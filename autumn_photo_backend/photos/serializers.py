@@ -54,14 +54,13 @@ class PhotoCommentSerializer(serializers.ModelSerializer):
         return user.full_name or user.email.split("@")[0]
 
     def get_replies(self, obj):
-        """Get nested replies, only for top-level comments"""
-        if obj.parent_comment is None:
-            try:
-                replies = obj.replies.all().order_by("-created_at")
-                if replies.exists():
-                    return PhotoCommentSerializer(replies, many=True).data
-            except Exception as e:
-                print(f"Error fetching replies for comment {obj.id}: {str(e)}")
+        """Get nested replies recursively for all comments"""
+        try:
+            replies = obj.replies.all().order_by("-created_at")
+            if replies.exists():
+                return PhotoCommentSerializer(replies, many=True).data
+        except Exception as e:
+            print(f"Error fetching replies for comment {obj.id}: {str(e)}")
         return []
 
 
