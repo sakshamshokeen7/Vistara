@@ -110,8 +110,11 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
       if (res.status === 201 || res.status === 200) {
         console.log("Comment added successfully:", res.data);
         setNewComment("");
+        // Wait a moment for backend to process, then fetch fresh data
+        await new Promise(resolve => setTimeout(resolve, 300));
         await fetchComments();
         await fetchDetail();
+        console.log("Comments refreshed after new comment");
       }
     } catch (error: any) {
       console.error("Failed to add comment:", error);
@@ -139,8 +142,11 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
       if (res.status === 201 || res.status === 200) {
         setReplyText("");
         setReplyingTo(null);
+        // Wait a moment for backend to process, then fetch fresh data
+        await new Promise(resolve => setTimeout(resolve, 300));
         await fetchComments();
         await fetchDetail();
+        console.log("Comments refreshed after reply");
       }
     } catch (error: any) {
       console.error("Failed to add reply:", error);
