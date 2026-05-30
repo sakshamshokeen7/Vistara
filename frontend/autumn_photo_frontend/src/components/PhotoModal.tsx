@@ -60,7 +60,11 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
     return () => clearInterval(t);
   }, [photoId]);
 
-  const toggleLike = async () => {
+  const toggleLike = async (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     try {
       const res = await axios.post(`/photos/${photoId}/like/`);
       setLiked(res.data.liked ?? !liked);
@@ -70,7 +74,11 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
     }
   };
 
-  const toggleFavourite = async () => {
+  const toggleFavourite = async (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     try {
       const res = await axios.post(`/photos/${photoId}/favourite/`);
       setFavourited(res.data.favourited ?? !favourited);
@@ -80,15 +88,21 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
     }
   };
 
-  const addComment = async () => {
+  const addComment = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (!newComment.trim()) return;
     try {
-      await axios.post(`/photos/${photoId}/comments/add/`, { text: newComment });
-      setNewComment("");
-      fetchComments();
-      fetchDetail();
-    } catch (e) {
-      console.error(e);
+      const res = await axios.post(`/photos/${photoId}/comments/add/`, { text: newComment });
+      if (res.status === 200) {
+        console.log("Comment added successfully");
+        setNewComment("");
+        await fetchComments();
+        await fetchDetail();
+      }
+    } catch (error) {
+      console.error("Failed to add comment:", error);
+      alert("Failed to add comment");
     }
   };
 
@@ -167,12 +181,12 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
 
           <div className="w-full md:w-96 p-4 border-l border-gray-800">
             <div className="flex flex-wrap items-center gap-2 mb-4">
-              <button onClick={toggleLike} className="flex items-center gap-2 px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
+              <button onClick={(e) => toggleLike(e)} className="flex items-center gap-2 px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
                 <Heart className="w-4 h-4" />
                 <span className="text-sm">{detail?.likes_count ?? 0}</span>
               </button>
 
-              <button onClick={toggleFavourite} className="flex items-center gap-2 px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
+              <button onClick={(e) => toggleFavourite(e)} className="flex items-center gap-2 px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
                 <Star className="w-4 h-4" />
                 <span className="text-sm">{detail?.favourites_count ?? 0}</span>
               </button>
@@ -199,7 +213,7 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
               <div className="font-medium mb-2">Tag someone</div>
               <div className="flex gap-2">
                 <input value={tagUser} onChange={(e)=>setTagUser(e.target.value)} placeholder="enter email address " className="flex-1 p-2 bg-gray-800 rounded" />
-                <button onClick={tagPerson} className="px-3 py-2 bg-black-600 rounded">Tag</button>
+                <button onClick={tagPerson} className="px-3 py-2 bg-green-600 hover:bg-green-700 rounded font-medium transition-colors">Tag</button>
               </div>
             </div>
 
@@ -216,7 +230,7 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
 
               <div className="flex gap-2">
                 <input value={newComment} onChange={(e)=>setNewComment(e.target.value)} placeholder="Add a comment" className="flex-1 p-2 bg-gray-800 rounded" />
-                <button onClick={addComment} className="px-3 py-2 bg-black-600 rounded">Send</button>
+                <button onClick={(e) => addComment(e)} className="px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded font-medium transition-colors">Send</button>
               </div>
             </div>
             {detail?.person_tags?.length > 0 && (
