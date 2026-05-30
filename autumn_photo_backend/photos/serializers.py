@@ -41,11 +41,15 @@ class PersonTagSerializer(serializers.ModelSerializer):
 
 
 class PhotoCommentSerializer(serializers.ModelSerializer):
-    user_name = serializers.CharField(source="user.username", read_only=True)
+    user_name = serializers.SerializerMethodField()
 
     class Meta:
         model = PhotoComment
         fields = ["id", "user_name", "text", "created_at"]
+
+    def get_user_name(self, obj):
+        user = obj.user
+        return user.full_name or user.email.split("@")[0]
 
 
 class AddCommentSerializer(serializers.Serializer):
@@ -55,8 +59,14 @@ class EventPhotoSerializer(serializers.ModelSerializer):
     likes_count = serializers.IntegerField(read_only=True)
     comments_count = serializers.IntegerField(read_only=True)
     favourites_count = serializers.IntegerField(read_only=True)
-    uploader_name = serializers.CharField(source="uploader.username", read_only=True)
+    uploader_name = serializers.SerializerMethodField()
     thumbnail_file = serializers.SerializerMethodField()
+
+    def get_uploader_name(self, obj):
+        user = obj.uploader
+        if user:
+            return user.full_name or user.email.split("@")[0]
+        return "Unknown"
 
     def get_thumbnail_file(self, obj):
         request = self.context.get("request")
@@ -91,8 +101,14 @@ class PhotoDetailSerializer(serializers.ModelSerializer):
     likes_count = serializers.IntegerField(read_only=True)
     comments_count = serializers.IntegerField(read_only=True)
     favourites_count = serializers.IntegerField(read_only=True)
-    uploader_name = serializers.CharField(source="uploader.username", read_only=True)
+    uploader_name = serializers.SerializerMethodField()
     person_tags = PersonTagSerializer(many=True, read_only=True)
+
+    def get_uploader_name(self, obj):
+        user = obj.uploader
+        if user:
+            return user.full_name or user.email.split("@")[0]
+        return "Unknown"
 
     class Meta:
         model = Photo
