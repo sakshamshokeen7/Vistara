@@ -47,7 +47,8 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
   const fetchComments = async () => {
     try {
       const res = await axios.get(`/photos/${photoId}/comments/`);
-      setComments(res.data || []);
+      const commentsList = res.data.results || res.data || [];
+      setComments(commentsList);
     } catch (e) {
       console.error(e);
     }
@@ -88,21 +89,29 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
     }
   };
 
-  const addComment = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!newComment.trim()) return;
+  const addComment = async (e?: React.MouseEvent<HTMLButtonElement>) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (!newComment.trim()) {
+      console.log("Comment is empty");
+      return;
+    }
     try {
+      console.log("Sending comment:", newComment);
       const res = await axios.post(`/photos/${photoId}/comments/add/`, { text: newComment });
+      console.log("Response status:", res.status, "Data:", res.data);
       if (res.status === 201 || res.status === 200) {
         console.log("Comment added successfully:", res.data);
         setNewComment("");
         await fetchComments();
         await fetchDetail();
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to add comment:", error);
-      alert("Failed to add comment");
+      console.error("Error response:", error.response?.data);
+      alert("Failed to add comment: " + (error.response?.data?.detail || error.message));
     }
   };
 
@@ -230,7 +239,7 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
 
               <div className="flex gap-2">
                 <input value={newComment} onChange={(e)=>setNewComment(e.target.value)} placeholder="Add a comment" className="flex-1 p-2 bg-gray-800 rounded" />
-                <button onClick={(e) => addComment(e)} className="px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded font-medium transition-colors">Send</button>
+                <button type="button" onClick={(e) => addComment(e)} className="px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded font-medium transition-colors">Send</button>
               </div>
             </div>
             {detail?.person_tags?.length > 0 && (
