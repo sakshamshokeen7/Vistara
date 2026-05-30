@@ -191,25 +191,30 @@ class CommentCreateAPIView(APIView):
 
         photo = comment.photo
         
-        # Notify photo uploader if this is a top-level comment
-        if parent_comment is None and photo.uploader_id != request.user.id:
-            create_notification.delay({
-                "recipient": photo.uploader_id,
-                "actor": request.user.id,
-                "notification_type": "comment",
-                "message": f"{request.user.email} commented on your photo",
-                "photo_id": photo.id,
-            })
-        
-        # Notify parent comment author if this is a reply
-        if parent_comment and parent_comment.user_id != request.user.id:
-            create_notification.delay({
-                "recipient": parent_comment.user_id,
-                "actor": request.user.id,
-                "notification_type": "reply",
-                "message": f"{request.user.email} replied to your comment",
-                "photo_id": photo.id,
-            })
+        try:
+            # Notify photo uploader if this is a top-level comment
+            if parent_comment is None and photo.uploader_id != request.user.id:
+                create_notification.delay({
+                    "recipient": photo.uploader_id,
+                    "actor": request.user.id,
+                    "notification_type": "comment",
+                    "message": f"{request.user.email} commented on your photo",
+                    "photo_id": photo.id,
+                })
+            
+            # Notify parent comment author if this is a reply (to a top-level comment or another reply)
+            if parent_comment and parent_comment.user:
+                if parent_comment.user_id != request.user.id:
+                    create_notification.delay({
+                        "recipient": parent_comment.user_id,
+                        "actor": request.user.id,
+                        "notification_type": "reply",
+                        "message": f"{request.user.email} replied to your comment",
+                        "photo_id": photo.id,
+                    })
+        except Exception as e:
+            # Log the notification error but don't fail the comment creation
+            print(f"Error sending notification: {str(e)}")
 
         comment_serializer = PhotoCommentSerializer(comment)
         return Response({"message": "Comment added", "comment": comment_serializer.data}, status=201)
