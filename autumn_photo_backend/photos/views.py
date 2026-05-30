@@ -176,19 +176,38 @@ class CommentCreateAPIView(APIView):
         serializer = AddCommentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
+        parent_comment_id = serializer.validated_data.get("parent_comment_id")
+        parent_comment = None
+        
+        if parent_comment_id:
+            parent_comment = get_object_or_404(PhotoComment, id=parent_comment_id, photo_id=photo_id)
+
         comment = PhotoComment.objects.create(
             user=request.user,
             photo_id=photo_id,
             text=serializer.validated_data["text"],
+            parent_comment=parent_comment,
         )
 
         photo = comment.photo
-        if photo.uploader_id != request.user.id:
+        
+        # Notify photo uploader if this is a top-level comment
+        if parent_comment is None and photo.uploader_id != request.user.id:
             create_notification.delay({
                 "recipient": photo.uploader_id,
                 "actor": request.user.id,
                 "notification_type": "comment",
                 "message": f"{request.user.email} commented on your photo",
+                "photo_id": photo.id,
+            })
+        
+        # Notify parent comment author if this is a reply
+        if parent_comment and parent_comment.user_id != request.user.id:
+            create_notification.delay({
+                "recipient": parent_comment.user_id,
+                "actor": request.user.id,
+                "notification_type": "reply",
+                "message": f"{request.user.email} replied to your comment",
                 "photo_id": photo.id,
             })
 
@@ -200,7 +219,8 @@ class CommentListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         return PhotoComment.objects.filter(
-            photo_id=self.kwargs["photo_id"]
+            photo_id=self.kwargs["photo_id"],
+            parent_comment__isnull=True
         ).order_by("-created_at")
 
 class MultiplePhotoUploadAPIView(APIView):
