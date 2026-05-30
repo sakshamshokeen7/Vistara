@@ -192,7 +192,8 @@ class CommentCreateAPIView(APIView):
                 "photo_id": photo.id,
             })
 
-        return Response({"message": "Comment added"})
+        comment_serializer = PhotoCommentSerializer(comment)
+        return Response({"message": "Comment added", "comment": comment_serializer.data}, status=201)
 
 class CommentListAPIView(generics.ListAPIView):
     serializer_class = PhotoCommentSerializer

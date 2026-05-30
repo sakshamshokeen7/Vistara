@@ -94,8 +94,8 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
     if (!newComment.trim()) return;
     try {
       const res = await axios.post(`/photos/${photoId}/comments/add/`, { text: newComment });
-      if (res.status === 200) {
-        console.log("Comment added successfully");
+      if (res.status === 201 || res.status === 200) {
+        console.log("Comment added successfully:", res.data);
         setNewComment("");
         await fetchComments();
         await fetchDetail();
