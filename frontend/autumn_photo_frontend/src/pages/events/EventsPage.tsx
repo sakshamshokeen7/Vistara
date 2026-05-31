@@ -23,6 +23,9 @@ interface Photo {
 export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
   const [search, setSearch] = useState("");
+  const [searchLocation, setSearchLocation] = useState("");
+  const [searchDateFrom, setSearchDateFrom] = useState("");
+  const [searchDateTo, setSearchDateTo] = useState("");
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [view, setView] = useState("grid");
@@ -46,9 +49,19 @@ export default function EventsPage() {
   const email = useSelector((s: any) => s.auth.email);
 
 
-  const fetchEvents = async (query = "") => {
+  const fetchEvents = async (query = "", location = "", dateFrom = "", dateTo = "") => {
     try {
-      const res = await axios.get(`/events/?search=${query}`);
+      let url = `/events/?search=${encodeURIComponent(query)}`;
+      if (location) {
+        url += `&search=${encodeURIComponent(location)}`;
+      }
+      if (dateFrom) {
+        url += `&date_from=${encodeURIComponent(dateFrom)}`;
+      }
+      if (dateTo) {
+        url += `&date_to=${encodeURIComponent(dateTo)}`;
+      }
+      const res = await axios.get(url);
       // Handle paginated response
       const eventsList = res.data.results || res.data;
       setEvents(eventsList);
@@ -69,33 +82,15 @@ export default function EventsPage() {
 };
 
   const handleSearch = async (query = "") => {
-    if (!query.trim()) {
-      fetchEvents();
-      setSearchMode("events");
-      setSearchQuery("");
-      return;
-    }
+    await fetchEvents(query, searchLocation, searchDateFrom, searchDateTo);
+  };
 
-    try {
-      const photosRes = await axios.get(`/photos/search/?q=${encodeURIComponent(query)}`);
-      const foundPhotos = photosRes.data.photos || [];
-
-      if (foundPhotos.length > 0) {
-        setPhotos(foundPhotos);
-        setSelectedEvent(null);
-        setSearchMode("photos");
-        setSearchQuery(query);
-      } else {
-        const eventsRes = await axios.get(`/events/?search=${encodeURIComponent(query)}`);
-        // Handle paginated response
-        const eventsList = eventsRes.data.results || eventsRes.data;
-        setEvents(eventsList || []);
-        setSearchMode("events");
-        setSearchQuery("");
-      }
-    } catch (e) {
-      console.error("Search failed", e);
-    }
+  const clearFilters = () => {
+    setSearch("");
+    setSearchLocation("");
+    setSearchDateFrom("");
+    setSearchDateTo("");
+    fetchEvents();
   };
 
 
@@ -185,7 +180,8 @@ export default function EventsPage() {
             <p className="text-gray-400 mt-1">Discover and explore upcoming events</p>
           </div>
         </div>
-        <div className="max-w-2xl mb-8">
+        <div className="mb-8 space-y-4">
+          {/* Main search input */}
           <div className="relative">
             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
               <Search className="w-5 h-5" />
@@ -193,16 +189,65 @@ export default function EventsPage() {
             <input
               onKeyDown={(e) => e.key === "Enter" && handleSearch(search)}
               type="text"
-              placeholder="Search events, photos, tags, or people..."
+              placeholder="Search by event name, description, tags, or people..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-12 pr-32 py-4 rounded-xl bg-gray-800/50 border border-gray-700/50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white-500 focus:border-transparent backdrop-blur-sm transition-all duration-200"
             />
             <button
               onClick={() => handleSearch(search)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2.5 rounded-lg bg-green-600 transition-all duration-200 font-semibold shadow-lg"
+              className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2.5 rounded-lg bg-green-600 hover:bg-green-700 transition-all duration-200 font-semibold shadow-lg"
             >
               Search
+            </button>
+          </div>
+
+          {/* Location and date filters */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm text-gray-400 mb-2">Location</label>
+              <input
+                type="text"
+                placeholder="Search by location..."
+                value={searchLocation}
+                onChange={(e) => setSearchLocation(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSearch(search)}
+                className="w-full px-4 py-2 rounded-lg bg-gray-800/50 border border-gray-700/50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white-500 focus:border-transparent backdrop-blur-sm transition-all duration-200"
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-gray-400 mb-2">From Date</label>
+              <input
+                type="datetime-local"
+                value={searchDateFrom}
+                onChange={(e) => setSearchDateFrom(e.target.value)}
+                className="w-full px-4 py-2 rounded-lg bg-gray-800/50 border border-gray-700/50 text-white focus:outline-none focus:ring-2 focus:ring-white-500 focus:border-transparent backdrop-blur-sm transition-all duration-200"
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-gray-400 mb-2">To Date</label>
+              <input
+                type="datetime-local"
+                value={searchDateTo}
+                onChange={(e) => setSearchDateTo(e.target.value)}
+                className="w-full px-4 py-2 rounded-lg bg-gray-800/50 border border-gray-700/50 text-white focus:outline-none focus:ring-2 focus:ring-white-500 focus:border-transparent backdrop-blur-sm transition-all duration-200"
+              />
+            </div>
+          </div>
+
+          {/* Filter buttons */}
+          <div className="flex gap-3">
+            <button
+              onClick={() => handleSearch(search)}
+              className="px-6 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 transition-all duration-200 font-medium shadow-lg"
+            >
+              Apply Filters
+            </button>
+            <button
+              onClick={clearFilters}
+              className="px-6 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition-all duration-200 font-medium shadow-lg"
+            >
+              Clear Filters
             </button>
           </div>
         </div>

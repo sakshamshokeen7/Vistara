@@ -10,23 +10,47 @@ from .models import Event
 from django.db import models
 from .serializers import EventSerializer
 from .permissions import ISADMIN_OR_COORDINATOR
+from datetime import datetime
 
 # Create your views here.
 class EventListApiView(generics.ListCreateAPIView):
     serializer_class = EventSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['name', 'slug', 'description']
+    search_fields = ['name', 'slug', 'description', 'location']
 
     def get_queryset(self):
         user = self.request.user
+        
+        # Base queryset based on permissions
         if user.is_authenticated and user.role == 'ADMIN':
-            return Event.objects.all()
-        if user.is_authenticated:
-            return Event.objects.filter(
+            queryset = Event.objects.all()
+        elif user.is_authenticated:
+            queryset = Event.objects.filter(
                 Q(is_public=True) |
                 Q(coordinators=user)
             )
-        return Event.objects.filter(is_public=True)
+        else:
+            queryset = Event.objects.filter(is_public=True)
+        
+        # Apply date range filters if provided
+        date_from = self.request.query_params.get('date_from')
+        date_to = self.request.query_params.get('date_to')
+        
+        if date_from:
+            try:
+                date_from_obj = datetime.fromisoformat(date_from)
+                queryset = queryset.filter(start_datetime__gte=date_from_obj)
+            except (ValueError, TypeError):
+                pass
+        
+        if date_to:
+            try:
+                date_to_obj = datetime.fromisoformat(date_to)
+                queryset = queryset.filter(end_datetime__lte=date_to_obj)
+            except (ValueError, TypeError):
+                pass
+        
+        return queryset
     
 class EventCreateApiView(generics.CreateAPIView):
     queryset = Event.objects.all()
