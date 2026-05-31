@@ -56,11 +56,11 @@ catch (err: any) {
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
                 <input
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="Email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="input-field pl-10 w-full"
+                  className="input-field pl-11 w-full"
                 />
               </div>
             </div>
@@ -70,11 +70,11 @@ catch (err: any) {
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  placeholder="Password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="input-field pl-10 pr-10 w-full"
+                  className="input-field pl-11 pr-10 w-full"
                 />
                 <button
                   type="button"

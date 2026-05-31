@@ -191,7 +191,7 @@ export default function EventsPage() {
                 placeholder="Search events..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-[10px] bg-[#111111] border border-white/[0.08] text-[#f5f5f5] placeholder-[#3a3a3a] focus:outline-none focus:border-blue-500/40 transition-colors duration-200 font-sans text-sm"
+                className="w-full pl-12 pr-4 py-3 rounded-[10px] bg-[#111111] border border-white/[0.08] text-[#f5f5f5] placeholder-[#4a4a4a] focus:outline-none focus:border-blue-500/40 transition-colors duration-200 font-sans text-sm"
               />
             </div>
             <button
@@ -205,10 +205,10 @@ export default function EventsPage() {
           {/* Location and date filters */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">Location</label>
+              <label className="block text-xs font-medium text-neutral-500 mb-3 uppercase tracking-wider">Location</label>
               <input
                 type="text"
-                placeholder="Search by location..."
+                placeholder="Location..."
                 value={searchLocation}
                 onChange={(e) => setSearchLocation(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch(search)}
@@ -216,7 +216,7 @@ export default function EventsPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">From Date</label>
+              <label className="block text-xs font-medium text-neutral-500 mb-3 uppercase tracking-wider">From Date</label>
               <input
                 type="datetime-local"
                 value={searchDateFrom}
@@ -225,7 +225,7 @@ export default function EventsPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">To Date</label>
+              <label className="block text-xs font-medium text-neutral-500 mb-3 uppercase tracking-wider">To Date</label>
               <input
                 type="datetime-local"
                 value={searchDateTo}

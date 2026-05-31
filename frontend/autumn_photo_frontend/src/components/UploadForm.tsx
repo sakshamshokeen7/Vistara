@@ -24,7 +24,15 @@ export default function UploadForm({ onUploadComplete }: UploadFormProps) {
     const loadEvents = async () => {
       try {
         const data = await getEvents();
-        setEvents(data?.events ?? data ?? []);
+        if (Array.isArray(data)) {
+          setEvents(data);
+        } else if (data?.results && Array.isArray(data.results)) {
+          setEvents(data.results);
+        } else if (data?.events && Array.isArray(data.events)) {
+          setEvents(data.events);
+        } else {
+          setEvents([]);
+        }
       } catch (e) {
         console.error("Failed loading events", e);
         setEvents([]);
