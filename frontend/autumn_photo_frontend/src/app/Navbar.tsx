@@ -37,46 +37,55 @@ export default function Navbar() {
   const roleVal = (role || '').toString().trim().toUpperCase();
 
   return (
-    <nav className="w-full bg-slate-900 text-white p-3 flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <Link to="/events" className="text-xl font-bold">Events</Link>
+    <nav className="sticky top-0 z-10 bg-[#0a0a0a] border-b border-white/[0.06] h-[58px] px-7 flex items-center justify-between">
+      <div className="flex items-center gap-8">
+        <Link to="/events" className="font-serif text-[17px] font-normal text-[#f5f5f5] hover:text-white transition-colors">
+          Autumn Photo
+        </Link>
+        <div className="hidden md:flex items-center gap-1">
+          <Link to="/events" className="font-sans text-body text-neutral-500 hover:text-white hover:bg-white/[0.05] px-3 py-1.5 rounded-md transition-all duration-150">
+            Events
+          </Link>
+        </div>
       </div>
 
-      <div className="flex items-center gap-3">
-  {isAuth && (
-    <>
-      {/* 🔔 Notifications */}
-      <NotificationBell />
+      <div className="flex items-center gap-2">
+        {isAuth && (
+          <>
+            {/* 🔔 Notifications */}
+            <NotificationBell />
 
-      {roleVal === 'ADMIN' && (
-        <Link to="/admin" className="px-3 py-1 bg-black-600 rounded">
-          Admin
-        </Link>
-      )}
+            {roleVal === 'ADMIN' && (
+              <Link to="/admin" className="w-[34px] h-[34px] flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.07] hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 transition-all duration-150 text-body">
+                A
+              </Link>
+            )}
 
-      {roleVal === 'PHOTOGRAPHER' && (
-        <Link to="/photographer" className="px-3 py-1 bg-black-600 rounded">
-          Photographer Dashboard
-        </Link>
-      )}
+            {roleVal === 'PHOTOGRAPHER' && (
+              <Link to="/photographer" title="Photographer Dashboard" className="w-[34px] h-[34px] flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.07] hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 transition-all duration-150 text-body">
+                P
+              </Link>
+            )}
 
-      <Link to="/profile" className="px-3 py-1 bg-black-600 rounded text-white">
-        Profile
-      </Link>
+            <Link to="/profile" title="Profile" className="w-[34px] h-[34px] flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.07] hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 transition-all duration-150 text-body">
+              👤
+            </Link>
 
-      <button onClick={logout} className="px-3 py-1 bg-red-600 rounded">
-        Logout
-      </button>
-    </>
-  )}
+            <button 
+              onClick={logout} 
+              className="font-sans text-btn text-neutral-500 border border-white/10 hover:bg-white/[0.05] hover:border-white/20 px-4 py-1.5 rounded-lg transition-all duration-150"
+            >
+              Logout
+            </button>
+          </>
+        )}
 
-  {!isAuth && (
-    <Link to="/login" className="px-3 py-1 bg-indigo-600 rounded">
-      Login
-    </Link>
-  )}
-</div>
-
+        {!isAuth && (
+          <Link to="/login" className="font-sans text-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg transition-all duration-150">
+            Login
+          </Link>
+        )}
+      </div>
     </nav>
   );
 }

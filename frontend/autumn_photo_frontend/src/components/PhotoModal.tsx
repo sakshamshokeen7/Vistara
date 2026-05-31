@@ -171,17 +171,17 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
     return (
       <div key={comment.id}>
         <div 
-          style={{ marginLeft: `${level * 16}px` }} 
-          className="p-2 bg-gray-800 rounded text-sm mb-2 border-l-2 border-blue-500"
+          style={{ marginLeft: `${level * 12}px` }} 
+          className="p-2.5 bg-white/[0.02] rounded-lg text-sm mb-2 border-l-2 border-blue-500/40"
         >
-          <div className="font-semibold text-xs flex justify-between items-start">
-            <span>{comment.user_name}</span>
-            <span className="text-gray-400 text-xs">{new Date(comment.created_at).toLocaleString()}</span>
+          <div className="font-sans font-medium text-xs flex justify-between items-start gap-2">
+            <span className="text-neutral-300">{comment.user_name}</span>
+            <span className="text-neutral-600 text-xs whitespace-nowrap">{new Date(comment.created_at).toLocaleString()}</span>
           </div>
-          <div className="mt-1">{comment.text}</div>
+          <div className="mt-1 font-sans text-body text-neutral-400">{comment.text}</div>
           <button
             onClick={() => setReplyingTo(comment.id)}
-            className="text-xs text-blue-400 hover:text-blue-300 mt-1 font-medium"
+            className="text-xs text-blue-400 hover:text-blue-300 mt-1.5 font-medium font-sans transition-colors"
           >
             Reply
           </button>
@@ -241,125 +241,165 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
   
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-      <div className="bg-gray-900 text-white rounded-xl max-w-4xl w-full overflow-hidden">
-        <div className="flex items-center justify-between p-3 border-b border-gray-800">
-          <div className="font-semibold">Photo</div>
-          <button onClick={onClose} className="p-1 rounded hover:bg-gray-800">
-            <X />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4">
+      <div className="bg-[#111111] text-white rounded-2xl max-w-4xl w-full overflow-hidden border border-white/[0.08] shadow-2xl">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
+          <h2 className="font-serif text-card-title text-[#f0f0f0]">Photo Details</h2>
+          <button onClick={onClose} className="p-1 rounded-lg text-neutral-600 hover:text-white hover:bg-white/[0.05] transition-all duration-150">
+            <X className="w-5 h-5" />
           </button>
         </div>
 
         <div className="flex flex-col md:flex-row">
-          <div className="md:flex-1 bg-black flex items-center justify-center">
+          <div className="md:flex-1 bg-black/50 flex items-center justify-center min-h-[60vh] md:min-h-auto">
             <img src={detail?.original_file || photoUrl} alt="photo" className="max-h-[70vh] object-contain" />
           </div>
 
-          <div className="w-full md:w-96 p-4 border-l border-gray-800">
+          <div className="w-full md:w-96 p-4 border-l border-white/[0.06] overflow-y-auto max-h-[70vh]">
+            {/* Action buttons */}
             <div className="flex flex-wrap items-center gap-2 mb-4">
-              <button onClick={(e) => toggleLike(e)} className="flex items-center gap-2 px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
-                <Heart className="w-4 h-4" />
+              <button 
+                onClick={(e) => toggleLike(e)} 
+                className="flex items-center gap-2 px-3 py-2 bg-white/[0.04] hover:bg-blue-500/10 border border-white/[0.07] hover:border-blue-500/25 rounded-lg transition-all duration-150 font-sans text-btn"
+              >
+                <Heart className={`w-4 h-4 ${liked ? 'fill-current text-red-500' : ''}`} />
                 <span className="text-sm">{detail?.likes_count ?? 0}</span>
               </button>
 
-              <button onClick={(e) => toggleFavourite(e)} className="flex items-center gap-2 px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
-                <Star className="w-4 h-4" />
+              <button 
+                onClick={(e) => toggleFavourite(e)} 
+                className="flex items-center gap-2 px-3 py-2 bg-white/[0.04] hover:bg-blue-500/10 border border-white/[0.07] hover:border-blue-500/25 rounded-lg transition-all duration-150 font-sans text-btn"
+              >
+                <Star className={`w-4 h-4 ${favourited ? 'fill-current text-yellow-500' : ''}`} />
                 <span className="text-sm">{detail?.favourites_count ?? 0}</span>
               </button>
 
               <button 
                 onClick={downloadOriginal} 
                 disabled={downloading}
-                className="flex items-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed rounded-lg transition-colors font-medium"
+                className="btn-primary px-3 py-2 text-btn disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Download className="w-4 h-4" />
-                <span className="text-sm">{downloading ? "Downloading..." : "Download"}</span>
+                <span className="text-sm">{downloading ? "..." : "Get"}</span>
               </button>
 
               <button 
                 onClick={shareLink} 
-                className="flex items-center gap-2 px-3 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors font-medium"
+                className="btn-secondary px-3 py-2 text-btn"
               >
                 <Share2 className="w-4 h-4" />
-                <span className="text-sm">{copied ? "Copied!" : "Share"}</span>
+                <span className="text-sm">{copied ? "✓" : "Share"}</span>
               </button>
             </div>
 
-            <div className="mb-4">
-              <div className="font-medium mb-2">Tag someone</div>
+            {/* Tag section */}
+            <div className="mb-4 pb-4 border-b border-white/[0.05]">
+              <label className="font-sans text-filter-label text-neutral-600 mb-2 block uppercase">Tag someone</label>
               <div className="flex gap-2">
-                <input value={tagUser} onChange={(e)=>setTagUser(e.target.value)} placeholder="enter email address " className="flex-1 p-2 bg-gray-800 rounded" />
-                <button onClick={tagPerson} className="px-3 py-2 bg-green-600 hover:bg-green-700 rounded font-medium transition-colors">Tag</button>
+                <input 
+                  value={tagUser} 
+                  onChange={(e)=>setTagUser(e.target.value)} 
+                  placeholder="Enter email address..." 
+                  className="input-field flex-1 text-btn" 
+                />
+                <button 
+                  onClick={tagPerson} 
+                  className="btn-primary px-3 py-2 text-btn whitespace-nowrap"
+                >
+                  Tag
+                </button>
               </div>
             </div>
 
-            <div>
-              <div className="font-medium mb-2">Comments</div>
-              <div className="max-h-80 overflow-y-auto mb-2">
-                {comments.length ? comments.map((c)=> renderCommentTree(c)) : <div className="text-gray-400 text-sm">No comments yet</div>}
+            {/* Comments section */}
+            <div className="mb-4 pb-4 border-b border-white/[0.05]">
+              <h3 className="font-sans text-filter-label text-neutral-600 mb-3 uppercase">Comments ({comments.length})</h3>
+              <div className="max-h-64 overflow-y-auto mb-3 space-y-2">
+                {comments.length ? comments.map((c)=> renderCommentTree(c)) : <p className="font-sans text-body text-neutral-600 text-sm">No comments yet</p>}
               </div>
 
               {replyingTo && (
-                <div className="mb-2 p-2 bg-gray-700 rounded border-l-2 border-blue-500">
-                  <div className="text-xs text-gray-300 mb-1">Replying to comment #{replyingTo}</div>
+                <div className="mb-3 p-3 bg-blue-500/[0.06] rounded-lg border border-blue-500/20 text-sm">
+                  <div className="font-sans text-filter-label text-blue-300 mb-2">Replying to comment #{replyingTo}</div>
                   <div className="flex gap-2">
                     <input 
                       value={replyText} 
                       onChange={(e) => setReplyText(e.target.value)} 
                       placeholder="Write your reply..." 
-                      className="flex-1 p-2 bg-gray-800 rounded text-sm" 
+                      className="input-field flex-1 text-btn" 
                     />
-                    <button type="button" onClick={(e) => addReply(e)} className="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded font-medium transition-colors text-sm">Reply</button>
-                    <button type="button" onClick={() => { setReplyingTo(null); setReplyText(""); }} className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded font-medium transition-colors text-sm">Cancel</button>
+                    <button 
+                      type="button" 
+                      onClick={(e) => addReply(e)} 
+                      className="btn-primary px-3 py-2 text-btn whitespace-nowrap"
+                    >
+                      Reply
+                    </button>
+                    <button 
+                      type="button" 
+                      onClick={() => { setReplyingTo(null); setReplyText(""); }} 
+                      className="btn-secondary px-3 py-2 text-btn whitespace-nowrap"
+                    >
+                      Cancel
+                    </button>
                   </div>
                 </div>
               )}
 
               <div className="flex gap-2">
-                <input value={newComment} onChange={(e)=>setNewComment(e.target.value)} placeholder="Add a comment" className="flex-1 p-2 bg-gray-800 rounded" />
-                <button type="button" onClick={(e) => addComment(e)} className="px-3 py-2 bg-blue-600 hover:bg-blue-700 rounded font-medium transition-colors">Send</button>
+                <input 
+                  value={newComment} 
+                  onChange={(e)=>setNewComment(e.target.value)} 
+                  placeholder="Add a comment..." 
+                  className="input-field flex-1 text-btn" 
+                />
+                <button 
+                  type="button" 
+                  onClick={(e) => addComment(e)} 
+                  className="btn-primary px-4 py-2 text-btn whitespace-nowrap"
+                >
+                  Send
+                </button>
               </div>
             </div>
+
+            {/* Person tags */}
             {detail?.person_tags?.length > 0 && (
-  <div className="mb-4">
-    <div className="font-medium mb-1">Tagged</div>
-    <div className="flex flex-wrap gap-2">
-      {detail?.person_tags.map((t: any) => (
-        <span
-          key={t.id}
-          className="px-2 py-1 text-sm bg-gray-800 rounded"
-        >
-          @{t.tagged_user_name}
-        </span>
-      ))}
-    </div>
-  </div>
-)}
-          {detail?.tags && (
-  <div className="mt-4">
-    <h4 className="text-sm font-semibold text-gray-300 mb-2">
-      AI Tags
-    </h4>
+              <div className="mb-4 pb-4 border-b border-white/[0.05]">
+                <h4 className="font-sans text-filter-label text-neutral-600 mb-2 uppercase">Tagged people</h4>
+                <div className="flex flex-wrap gap-2">
+                  {detail?.person_tags.map((t: any) => (
+                    <span
+                      key={t.id}
+                      className="px-2 py-1 text-sm font-sans bg-blue-500/10 border border-blue-500/20 text-blue-300 rounded-full"
+                    >
+                      @{t.tagged_user_name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
 
-    <div className="flex flex-wrap gap-2">
-      {Object.entries(detail.tags)
-        .filter(([_, score]) => Number(score) > 0.05)
-        .sort((a, b) => Number(b[1]) - Number(a[1]))
-        .slice(0, 8)
-        .map(([tag]) => (
-          <span
-            key={tag}
-            className="px-3 py-1 bg-indigo-600/20 text-indigo-300 rounded-full text-xs"
-          >
-            {tag}
-          </span>
-        ))}
-    </div>
-  </div>
-)}
-
-
-
+            {/* AI Tags */}
+            {detail?.tags && (
+              <div>
+                <h4 className="font-sans text-filter-label text-neutral-600 mb-3 uppercase">AI Tags</h4>
+                <div className="flex flex-wrap gap-2">
+                  {Object.entries(detail.tags)
+                    .filter(([_, score]) => Number(score) > 0.05)
+                    .sort((a, b) => Number(b[1]) - Number(a[1]))
+                    .slice(0, 8)
+                    .map(([tag]) => (
+                      <span
+                        key={tag}
+                        className="px-3 py-1 font-sans text-xs bg-blue-500/10 border border-blue-500/20 text-blue-300 rounded-full"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

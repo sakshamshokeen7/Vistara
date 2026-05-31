@@ -1,85 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: 'Geist', sans-serif;
+  line-height: 1.6;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  color: #f5f5f5;
+  background-color: #0a0a0a;
+  color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #0a0a0a;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  margin: 0;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 48px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0;
+  color: #a3a3a3;
+}
+
+a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 150ms ease;
+}
+
+a:hover {
+  color: #2563eb;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+  font-family: 'Geist', sans-serif;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  border-radius: 8px;
+  transition: all 150ms ease;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+input, textarea, select {
+  font-family: 'Geist', sans-serif;
+  background-color: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  color: #f5f5f5;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  transition: all 150ms ease;
 }
 
-.input {
-  @apply w-full py-3 rounded-xl border border-gray-200 bg-white 
-  text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 
-  focus:ring-indigo-500 transition-all duration-200;
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: rgba(59, 130, 246, 0.45);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+input::placeholder, textarea::placeholder {
+  color: #3a3a3a;
+}
+
+input[type="datetime-local"] {
+  color-scheme: dark;
+}
+
+/* Utility classes */
+.card {
+  @apply bg-[#111111] border border-white/[0.07] rounded-xl overflow-hidden;
+  transition: all 300ms cubic-bezier(.22,.68,0,1.2);
+}
+
+.card:hover {
+  @apply border-blue-500/30 shadow-2xl;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(59, 130, 246, 0.08);
+  transform: translateY(-4px);
 }
 
 .btn-primary {
-  @apply w-full flex items-center justify-center gap-2 py-3.5 rounded-xl 
-  bg-gradient-to-r from-green-600 to-green-500 text-white font-semibold 
-  hover:from-indigo-700 hover:to-indigo-600 transition-all shadow-lg 
-  disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply bg-blue-500 hover:bg-blue-600 text-white font-medium text-btn px-5 py-2.5 rounded-lg;
+  active:scale-[0.97];
+}
+
+.btn-secondary {
+  @apply bg-transparent border border-white/[0.08] text-neutral-500 hover:text-white hover:border-white/20 rounded-lg px-4 py-2.5 text-btn;
+}
+
+.btn-danger {
+  @apply bg-transparent border border-white/[0.08] text-neutral-500 hover:border-red-900/50 hover:text-red-400 hover:bg-red-950/20 rounded-lg text-btn;
+}
+
+.input-field {
+  @apply bg-[#111111] border border-white/[0.07] rounded-lg px-3 py-2.5 font-sans text-body text-neutral-400;
+}
+
+.input-field:focus {
+  @apply border-blue-500/45 text-[#f5f5f5];
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.section-label {
+  @apply text-filter-label text-neutral-600 uppercase font-medium mb-5;
+}
+
+.empty-state-icon {
+  @apply w-20 h-20 rounded-full bg-blue-500/[0.06] border border-blue-500/[0.12] flex items-center justify-center;
+}
+
+.empty-state-icon svg {
+  @apply text-blue-900;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.animate-pulse {
+  animation: pulse 2.5s ease-in-out infinite;
 }
 
