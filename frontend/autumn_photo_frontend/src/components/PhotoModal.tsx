@@ -178,7 +178,7 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
             <span className="text-neutral-300">{comment.user_name}</span>
             <span className="text-neutral-600 text-xs whitespace-nowrap">{new Date(comment.created_at).toLocaleString()}</span>
           </div>
-          <div className="mt-1 font-sans text-body text-neutral-400">{comment.text}</div>
+          <div className="mt-1 font-sans text-sm text-neutral-400">{comment.text}</div>
           <button
             onClick={() => setReplyingTo(comment.id)}
             className="text-xs text-blue-400 hover:text-blue-300 mt-1.5 font-medium font-sans transition-colors"
@@ -244,7 +244,7 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4">
       <div className="bg-[#111111] text-white rounded-2xl max-w-4xl w-full overflow-hidden border border-white/[0.08] shadow-2xl">
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
-          <h2 className="font-serif text-card-title text-[#f0f0f0]">Photo Details</h2>
+          <h2 className="font-serif text-base text-[#f0f0f0]">Photo Details</h2>
           <button onClick={onClose} className="p-1 rounded-lg text-neutral-600 hover:text-white hover:bg-white/[0.05] transition-all duration-150">
             <X className="w-5 h-5" />
           </button>
@@ -260,7 +260,7 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
             <div className="flex flex-wrap items-center gap-2 mb-4">
               <button 
                 onClick={(e) => toggleLike(e)} 
-                className="flex items-center gap-2 px-3 py-2 bg-white/[0.04] hover:bg-blue-500/10 border border-white/[0.07] hover:border-blue-500/25 rounded-lg transition-all duration-150 font-sans text-btn"
+                className="flex items-center gap-2 px-3 py-2 bg-white/[0.04] hover:bg-blue-500/10 border border-white/[0.07] hover:border-blue-500/25 rounded-lg transition-all duration-150 font-sans text-xs"
               >
                 <Heart className={`w-4 h-4 ${liked ? 'fill-current text-red-500' : ''}`} />
                 <span className="text-sm">{detail?.likes_count ?? 0}</span>
@@ -268,7 +268,7 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
 
               <button 
                 onClick={(e) => toggleFavourite(e)} 
-                className="flex items-center gap-2 px-3 py-2 bg-white/[0.04] hover:bg-blue-500/10 border border-white/[0.07] hover:border-blue-500/25 rounded-lg transition-all duration-150 font-sans text-btn"
+                className="flex items-center gap-2 px-3 py-2 bg-white/[0.04] hover:bg-blue-500/10 border border-white/[0.07] hover:border-blue-500/25 rounded-lg transition-all duration-150 font-sans text-xs"
               >
                 <Star className={`w-4 h-4 ${favourited ? 'fill-current text-yellow-500' : ''}`} />
                 <span className="text-sm">{detail?.favourites_count ?? 0}</span>
@@ -277,7 +277,7 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
               <button 
                 onClick={downloadOriginal} 
                 disabled={downloading}
-                className="btn-primary px-3 py-2 text-btn disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-primary px-3 py-2 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Download className="w-4 h-4" />
                 <span className="text-sm">{downloading ? "..." : "Get"}</span>
@@ -285,7 +285,7 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
 
               <button 
                 onClick={shareLink} 
-                className="btn-secondary px-3 py-2 text-btn"
+                className="btn-secondary px-3 py-2 text-xs"
               >
                 <Share2 className="w-4 h-4" />
                 <span className="text-sm">{copied ? "✓" : "Share"}</span>
@@ -294,17 +294,17 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
 
             {/* Tag section */}
             <div className="mb-4 pb-4 border-b border-white/[0.05]">
-              <label className="font-sans text-filter-label text-neutral-600 mb-2 block uppercase">Tag someone</label>
+              <label className="font-sans text-xs font-medium text-neutral-600 mb-2 block uppercase tracking-wider">Tag someone</label>
               <div className="flex gap-2">
                 <input 
                   value={tagUser} 
                   onChange={(e)=>setTagUser(e.target.value)} 
                   placeholder="Enter email address..." 
-                  className="input-field flex-1 text-btn" 
+                  className="input-field flex-1 text-xs" 
                 />
                 <button 
                   onClick={tagPerson} 
-                  className="btn-primary px-3 py-2 text-btn whitespace-nowrap"
+                  className="btn-primary px-3 py-2 text-xs whitespace-nowrap"
                 >
                   Tag
                 </button>
@@ -313,32 +313,32 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
 
             {/* Comments section */}
             <div className="mb-4 pb-4 border-b border-white/[0.05]">
-              <h3 className="font-sans text-filter-label text-neutral-600 mb-3 uppercase">Comments ({comments.length})</h3>
+              <h3 className="font-sans text-xs font-medium text-neutral-600 mb-3 uppercase tracking-wider">Comments ({comments.length})</h3>
               <div className="max-h-64 overflow-y-auto mb-3 space-y-2">
-                {comments.length ? comments.map((c)=> renderCommentTree(c)) : <p className="font-sans text-body text-neutral-600 text-sm">No comments yet</p>}
+                {comments.length ? comments.map((c)=> renderCommentTree(c)) : <p className="font-sans text-sm text-neutral-600 text-sm">No comments yet</p>}
               </div>
 
               {replyingTo && (
                 <div className="mb-3 p-3 bg-blue-500/[0.06] rounded-lg border border-blue-500/20 text-sm">
-                  <div className="font-sans text-filter-label text-blue-300 mb-2">Replying to comment #{replyingTo}</div>
+                  <div className="font-sans text-xs font-medium text-blue-300 mb-2">Replying to comment #{replyingTo}</div>
                   <div className="flex gap-2">
                     <input 
                       value={replyText} 
                       onChange={(e) => setReplyText(e.target.value)} 
                       placeholder="Write your reply..." 
-                      className="input-field flex-1 text-btn" 
+                      className="input-field flex-1 text-xs" 
                     />
                     <button 
                       type="button" 
                       onClick={(e) => addReply(e)} 
-                      className="btn-primary px-3 py-2 text-btn whitespace-nowrap"
+                      className="btn-primary px-3 py-2 text-xs whitespace-nowrap"
                     >
                       Reply
                     </button>
                     <button 
                       type="button" 
                       onClick={() => { setReplyingTo(null); setReplyText(""); }} 
-                      className="btn-secondary px-3 py-2 text-btn whitespace-nowrap"
+                      className="btn-secondary px-3 py-2 text-xs whitespace-nowrap"
                     >
                       Cancel
                     </button>
@@ -351,12 +351,12 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
                   value={newComment} 
                   onChange={(e)=>setNewComment(e.target.value)} 
                   placeholder="Add a comment..." 
-                  className="input-field flex-1 text-btn" 
+                  className="input-field flex-1 text-xs" 
                 />
                 <button 
                   type="button" 
                   onClick={(e) => addComment(e)} 
-                  className="btn-primary px-4 py-2 text-btn whitespace-nowrap"
+                  className="btn-primary px-4 py-2 text-xs whitespace-nowrap"
                 >
                   Send
                 </button>
@@ -366,7 +366,7 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
             {/* Person tags */}
             {detail?.person_tags?.length > 0 && (
               <div className="mb-4 pb-4 border-b border-white/[0.05]">
-                <h4 className="font-sans text-filter-label text-neutral-600 mb-2 uppercase">Tagged people</h4>
+                <h4 className="font-sans text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">Tagged people</h4>
                 <div className="flex flex-wrap gap-2">
                   {detail?.person_tags.map((t: any) => (
                     <span
@@ -383,7 +383,7 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
             {/* AI Tags */}
             {detail?.tags && (
               <div>
-                <h4 className="font-sans text-filter-label text-neutral-600 mb-3 uppercase">AI Tags</h4>
+                <h4 className="font-sans text-xs font-medium text-neutral-600 mb-3 uppercase tracking-wider">AI Tags</h4>
                 <div className="flex flex-wrap gap-2">
                   {Object.entries(detail.tags)
                     .filter(([_, score]) => Number(score) > 0.05)

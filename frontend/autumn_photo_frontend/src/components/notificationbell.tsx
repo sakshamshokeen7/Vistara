@@ -90,7 +90,7 @@ export default function NotificationBell() {
       {open && (
         <div className="notification-dropdown absolute right-0 mt-3 w-80 bg-[#111111] text-white rounded-xl border border-white/[0.08] shadow-2xl z-50 max-h-96 overflow-y-auto">
           {notifications.length === 0 && (
-            <div className="p-4 font-sans text-body text-neutral-600 text-center">No notifications</div>
+            <div className="p-4 font-sans text-sm text-neutral-600 text-center">No notifications</div>
           )}
 
           {notifications.map((n) => (
@@ -101,9 +101,9 @@ export default function NotificationBell() {
                 n.is_read ? "opacity-60 hover:opacity-100" : "bg-blue-500/[0.06] hover:bg-blue-500/[0.1]"
               }`}
             >
-              <div className="font-sans font-medium text-sm text-neutral-200">{n.actor_name}</div>
-              <div className="font-sans text-body text-neutral-400 mt-1">{n.message}</div>
-              <div className="font-sans text-body text-neutral-600 mt-1">
+              <div className="font-sans text-sm text-neutral-200">{n.actor_name}</div>
+              <div className="font-sans text-sm text-neutral-400 mt-1">{n.message}</div>
+              <div className="font-sans text-sm text-neutral-600 mt-1">
                 {new Date(n.created_at).toLocaleString()}
               </div>
             </div>
@@ -114,11 +114,11 @@ export default function NotificationBell() {
               <button
                 onClick={handleLoadMore}
                 disabled={isLoading}
-                className="font-sans text-btn text-blue-500 hover:text-blue-400 disabled:opacity-50 transition-colors"
+                className="font-sans text-xs text-blue-500 hover:text-blue-400 disabled:opacity-50 transition-colors"
               >
                 {isLoading ? "Loading..." : "Load More"}
               </button>
-              <div className="font-sans text-body text-neutral-600 mt-2">
+              <div className="font-sans text-sm text-neutral-600 mt-2">
                 Showing {notifications.length} of {totalCount}
               </div>
             </div>

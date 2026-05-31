@@ -43,7 +43,7 @@ export default function Navbar() {
           Autumn Photo
         </Link>
         <div className="hidden md:flex items-center gap-1">
-          <Link to="/events" className="font-sans text-body text-neutral-500 hover:text-white hover:bg-white/[0.05] px-3 py-1.5 rounded-md transition-all duration-150">
+          <Link to="/events" className="font-sans text-sm text-neutral-500 hover:text-white hover:bg-white/[0.05] px-3 py-1.5 rounded-md transition-all duration-150">
             Events
           </Link>
         </div>
@@ -56,24 +56,24 @@ export default function Navbar() {
             <NotificationBell />
 
             {roleVal === 'ADMIN' && (
-              <Link to="/admin" className="w-[34px] h-[34px] flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.07] hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 transition-all duration-150 text-body">
+              <Link to="/admin" className="w-[34px] h-[34px] flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.07] hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 transition-all duration-150 text-sm">
                 A
               </Link>
             )}
 
             {roleVal === 'PHOTOGRAPHER' && (
-              <Link to="/photographer" title="Photographer Dashboard" className="w-[34px] h-[34px] flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.07] hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 transition-all duration-150 text-body">
+              <Link to="/photographer" title="Photographer Dashboard" className="w-[34px] h-[34px] flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.07] hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 transition-all duration-150 text-sm">
                 P
               </Link>
             )}
 
-            <Link to="/profile" title="Profile" className="w-[34px] h-[34px] flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.07] hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 transition-all duration-150 text-body">
+            <Link to="/profile" title="Profile" className="w-[34px] h-[34px] flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.07] hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 transition-all duration-150 text-sm">
               👤
             </Link>
 
             <button 
               onClick={logout} 
-              className="font-sans text-btn text-neutral-500 border border-white/10 hover:bg-white/[0.05] hover:border-white/20 px-4 py-1.5 rounded-lg transition-all duration-150"
+              className="font-sans text-xs text-neutral-500 border border-white/10 hover:bg-white/[0.05] hover:border-white/20 px-4 py-1.5 rounded-lg transition-all duration-150"
             >
               Logout
             </button>
@@ -81,7 +81,7 @@ export default function Navbar() {
         )}
 
         {!isAuth && (
-          <Link to="/login" className="font-sans text-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg transition-all duration-150">
+          <Link to="/login" className="font-sans text-xs bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg transition-all duration-150">
             Login
           </Link>
         )}

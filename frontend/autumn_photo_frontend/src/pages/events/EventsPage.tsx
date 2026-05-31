@@ -173,10 +173,10 @@ export default function EventsPage() {
         <div className="mb-8 animate-fadeUp">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-            <span className="font-sans text-eyebrow text-blue-500">Featured</span>
+            <span className="font-sans text-xs font-medium text-blue-500 uppercase tracking-widest">Featured</span>
           </div>
-          <h1 className="font-serif text-h1 text-[#f5f5f5]">Events</h1>
-          <p className="font-sans text-body text-neutral-600 mt-2">Discover and explore upcoming events</p>
+          <h1 className="font-serif text-5xl text-[#f5f5f5]">Events</h1>
+          <p className="font-sans text-sm text-neutral-600 mt-2">Discover and explore upcoming events</p>
         </div>
         <div className="mb-8 space-y-4">
           {/* Main search input */}
@@ -190,11 +190,11 @@ export default function EventsPage() {
               placeholder="Search by event name, description, tags, or people..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-32 py-3 rounded-[10px] bg-[#111111] border border-white/[0.08] text-[#f5f5f5] placeholder-[#3a3a3a] focus:outline-none focus:border-blue-500/40 transition-colors duration-200 font-sans text-body"
+              className="w-full pl-12 pr-32 py-3 rounded-[10px] bg-[#111111] border border-white/[0.08] text-[#f5f5f5] placeholder-[#3a3a3a] focus:outline-none focus:border-blue-500/40 transition-colors duration-200 font-sans text-sm"
             />
             <button
               onClick={() => handleSearch(search)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 px-5 py-2 rounded-[7px] bg-blue-500 hover:bg-blue-600 text-white transition-all duration-150 font-sans text-btn active:scale-[0.97]"
+              className="absolute right-2 top-1/2 -translate-y-1/2 px-5 py-2 rounded-[7px] bg-blue-500 hover:bg-blue-600 text-white transition-all duration-150 font-sans text-xs font-medium active:scale-[0.97]"
             >
               Search
             </button>
@@ -203,7 +203,7 @@ export default function EventsPage() {
           {/* Location and date filters */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
             <div>
-              <label className="block text-filter-label text-neutral-600 mb-2 uppercase">Location</label>
+              <label className="block text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">Location</label>
               <input
                 type="text"
                 placeholder="Search by location..."
@@ -214,7 +214,7 @@ export default function EventsPage() {
               />
             </div>
             <div>
-              <label className="block text-filter-label text-neutral-600 mb-2 uppercase">From Date</label>
+              <label className="block text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">From Date</label>
               <input
                 type="datetime-local"
                 value={searchDateFrom}
@@ -223,7 +223,7 @@ export default function EventsPage() {
               />
             </div>
             <div>
-              <label className="block text-filter-label text-neutral-600 mb-2 uppercase">To Date</label>
+              <label className="block text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">To Date</label>
               <input
                 type="datetime-local"
                 value={searchDateTo}
@@ -282,7 +282,7 @@ export default function EventsPage() {
                     </div>
 
                     <div className="px-4 pt-3.5 pb-4">
-                      <h3 className="font-serif text-card-title text-[#f0f0f0] mb-1 line-clamp-1">
+                      <h3 className="font-serif text-base font-normal text-[#f0f0f0] mb-1 line-clamp-1">
                         {ev.name}
                       </h3>
                       <p className="font-sans text-[12px] text-neutral-600 line-clamp-2 leading-relaxed">
@@ -299,7 +299,7 @@ export default function EventsPage() {
                         {canEditEvent(ev) && (
                           <button
                             onClick={(e) => openEditModal(ev, e)}
-                            className="btn-primary px-3 py-1 text-btn"
+                            className="btn-primary px-3 py-1 text-xs"
                           >
                             Edit
                           </button>
@@ -315,7 +315,7 @@ export default function EventsPage() {
                   <Search className="w-10 h-10" />
                 </div>
                 <h2 className="font-serif text-xl text-neutral-400">No events found</h2>
-                <p className="font-sans text-body text-neutral-600 mt-2">Try adjusting your search criteria</p>
+                <p className="font-sans text-sm text-neutral-600 mt-2">Try adjusting your search criteria</p>
               </div>
             )}
           </div>
@@ -327,7 +327,7 @@ export default function EventsPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 p-6 rounded-xl card border border-white/[0.07] bg-[#111111]">
               <div>
                 <button
-                  className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-400 transition-colors mb-3 group font-sans text-body"
+                  className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-400 transition-colors mb-3 group font-sans text-sm"
                   onClick={() => {
                     setSelectedEvent(null);
                     setPhotos([]);
@@ -343,12 +343,12 @@ export default function EventsPage() {
                 <h2 className="font-serif text-h2 text-[#f5f5f5]">
                   {selectedEvent ? selectedEvent.name : `Search Results: "${searchQuery}"`}
                 </h2>
-                <p className="font-sans text-body text-neutral-600 mt-2">{photos.length} photos available</p>
+                <p className="font-sans text-sm text-neutral-600 mt-2">{photos.length} photos available</p>
               </div>
               <div className="flex items-center gap-1 p-1 bg-white/[0.04] border border-white/[0.06] rounded-lg">
                 <button
                   onClick={() => setView("grid")}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-md font-sans text-btn transition-all duration-150 ${
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md font-sans text-xs font-medium transition-all duration-150 ${
                     view === "grid"
                       ? "bg-blue-500 text-white"
                       : "text-neutral-500 hover:text-white hover:bg-white/[0.05]"
@@ -359,7 +359,7 @@ export default function EventsPage() {
                 </button>
                 <button
                   onClick={() => setView("masonry")}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-md font-sans text-btn transition-all duration-150 ${
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md font-sans text-xs font-medium transition-all duration-150 ${
                     view === "masonry"
                       ? "bg-blue-500 text-white"
                       : "text-neutral-500 hover:text-white hover:bg-white/[0.05]"
@@ -370,7 +370,7 @@ export default function EventsPage() {
                 </button>
                 <button
                   onClick={() => setView("carousel")}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-md font-sans text-btn transition-all duration-150 ${
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md font-sans text-xs font-medium transition-all duration-150 ${
                     view === "carousel"
                       ? "bg-blue-500 text-white"
                       : "text-neutral-500 hover:text-white hover:bg-white/[0.05]"
@@ -457,7 +457,7 @@ export default function EventsPage() {
                   <Images className="w-10 h-10" />
                 </div>
                 <h2 className="font-serif text-xl text-neutral-400">No photos found</h2>
-                <p className="font-sans text-body text-neutral-600 mt-2">Photos will appear here once uploaded</p>
+                <p className="font-sans text-sm text-neutral-600 mt-2">Photos will appear here once uploaded</p>
               </div>
             )}
           </div>
@@ -467,52 +467,52 @@ export default function EventsPage() {
           <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50 p-4">
             <div className="bg-[#111111] rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-white/[0.08] shadow-2xl">
               <div className="sticky top-0 bg-[#111111] border-b border-white/[0.06] px-6 py-4 flex items-center justify-between">
-                <h2 className="font-serif text-h2 text-[#f5f5f5]">Edit Event</h2>
+                <h2 className="font-serif text-3xl text-[#f5f5f5]">Edit Event</h2>
                 <button onClick={closeEditModal} className="text-neutral-600 hover:text-white text-2xl leading-none transition-colors">&times;</button>
               </div>
 
               <form onSubmit={submitEdit} className="p-6 space-y-5">
                 {error && (
-                  <div className="p-3 rounded-lg bg-red-950/40 border border-red-900/40 text-red-300 text-body font-sans">
+                  <div className="p-3 rounded-lg bg-red-950/40 border border-red-900/40 text-red-300 text-sm font-sans">
                     {JSON.stringify(error)}
                   </div>
                 )}
 
                 <div>
-                  <label className="block font-sans text-filter-label text-neutral-600 mb-2 uppercase">Event Name</label>
+                  <label className="block font-sans text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">Event Name</label>
                   <input required value={editName} onChange={(e) => setEditName(e.target.value)} className="input-field w-full" />
                 </div>
 
                 <div>
-                  <label className="block font-sans text-filter-label text-neutral-600 mb-2 uppercase">Description</label>
+                  <label className="block font-sans text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">Description</label>
                   <textarea value={editDescription} onChange={(e) => setEditDescription(e.target.value)} rows={4} className="input-field w-full resize-none" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block font-sans text-filter-label text-neutral-600 mb-2 uppercase">Start Date & Time</label>
+                    <label className="block font-sans text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">Start Date & Time</label>
                     <input type="datetime-local" value={editStartDatetime} onChange={(e) => setEditStartDatetime(e.target.value)} className="input-field w-full" />
                   </div>
                   <div>
-                    <label className="block font-sans text-filter-label text-neutral-600 mb-2 uppercase">End Date & Time</label>
+                    <label className="block font-sans text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">End Date & Time</label>
                     <input type="datetime-local" value={editEndDatetime} onChange={(e) => setEditEndDatetime(e.target.value)} className="input-field w-full" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block font-sans text-filter-label text-neutral-600 mb-2 uppercase">Location</label>
+                  <label className="block font-sans text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">Location</label>
                   <input value={editLocation} onChange={(e) => setEditLocation(e.target.value)} className="input-field w-full" />
                 </div>
 
                 <div>
-                  <label className="block font-sans text-filter-label text-neutral-600 mb-2 uppercase">Cover Photo</label>
+                  <label className="block font-sans text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">Cover Photo</label>
                   <input type="file" accept="image/*" onChange={(e) => setEditCover(e.target.files?.[0] || null)} className="w-full text-neutral-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-blue-500 file:text-white file:cursor-pointer file:hover:bg-blue-600 transition-colors" />
-                  <p className="font-sans text-body text-neutral-600 mt-1">Leave empty to keep current cover</p>
+                  <p className="font-sans text-sm text-neutral-600 mt-1">Leave empty to keep current cover</p>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <input type="checkbox" id="editPublic" checked={editIsPublic} onChange={(e) => setEditIsPublic(e.target.checked)} className="w-4 h-4 rounded bg-[#111111] border border-white/[0.07] cursor-pointer accent-blue-500" />
-                  <label htmlFor="editPublic" className="font-sans text-body text-neutral-400 cursor-pointer">Public Event</label>
+                  <label htmlFor="editPublic" className="font-sans text-sm text-neutral-400 cursor-pointer">Public Event</label>
                 </div>
 
                 <div className="flex items-center gap-3 pt-4 border-t border-white/[0.05]">
