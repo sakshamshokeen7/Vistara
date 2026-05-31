@@ -364,7 +364,7 @@ const PhotoModal: React.FC<Props> = ({ photoId, photoUrl, onClose }) => {
             </div>
 
             {/* Person tags */}
-            {detail?.person_tags?.length > 0 && (
+            {(detail?.person_tags?.length ?? 0) > 0 && (
               <div className="mb-4 pb-4 border-b border-white/[0.05]">
                 <h4 className="font-sans text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">Tagged people</h4>
                 <div className="flex flex-wrap gap-2">

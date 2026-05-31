@@ -39,8 +39,9 @@ export default function MultipleUploadPage() {
   }, []);
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    setFiles((prev) => [...prev, ...Array.from(e.target.files)]);
+    const files = e.target.files;
+    if (!files) return;
+    setFiles((prev) => [...prev, ...Array.from(files)]);
   };
 
   const removeFile = (index: number) => {

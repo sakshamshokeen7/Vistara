@@ -188,7 +188,7 @@ export default function EventsPage() {
               <input
                 onKeyDown={(e) => e.key === "Enter" && handleSearch(search)}
                 type="text"
-                placeholder="Search events..."
+                placeholder="Search..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 rounded-[10px] bg-[#111111] border border-white/[0.08] text-[#f5f5f5] placeholder-[#4a4a4a] focus:outline-none focus:border-blue-500/40 transition-colors duration-200 font-sans text-sm"
@@ -264,7 +264,7 @@ export default function EventsPage() {
                   >
                     <div className="relative overflow-hidden h-48">
                       <img
-                        src={getMediaUrl(ev.cover) || "/placeholder_event.jpg"}
+                        src={getMediaUrl(ev.cover_upload) || "/placeholder_event.jpg"}
                         alt={ev.name}
                         className="w-full h-full object-cover filter brightness-[0.78] saturate-[0.55] contrast-[1.05] group-hover:brightness-[0.9] group-hover:saturate-[0.65] group-hover:scale-[1.06] transition-all duration-500"
                       />

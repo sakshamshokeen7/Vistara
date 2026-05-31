@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Sparkles, ArrowRight, Eye } from "lucide-react";
+import { Sparkles, ArrowRight } from "lucide-react";
 import { verifyOtp } from "../../services/authservice";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 
@@ -97,7 +97,9 @@ export default function VerifyOtpPage() {
               {digits.map((digit, i) => (
                 <input
                   key={i}
-                  ref={(el) => (inputsRef.current[i] = el)}
+                  ref={(el) => {
+                    if (el) inputsRef.current[i] = el;
+                  }}
                   inputMode="numeric"
                   pattern="\d*"
                   maxLength={1}

@@ -1,4 +1,4 @@
-import React from "react";
+// Component imports moved to top
 import { Navigate } from "react-router-dom";
 
 export default function UploadPage(){
