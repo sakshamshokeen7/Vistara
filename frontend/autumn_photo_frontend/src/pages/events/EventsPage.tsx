@@ -190,11 +190,11 @@ export default function EventsPage() {
               placeholder="Search by event name, description, tags, or people..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-32 py-3 rounded-[10px] bg-[#111111] border border-white/[0.08] text-[#f5f5f5] placeholder-[#3a3a3a] focus:outline-none focus:border-blue-500/40 transition-colors duration-200 font-sans text-sm"
+              className="w-full pl-12 pr-24 py-3 rounded-[10px] bg-[#111111] border border-white/[0.08] text-[#f5f5f5] placeholder-[#3a3a3a] focus:outline-none focus:border-blue-500/40 transition-colors duration-200 font-sans text-sm"
             />
             <button
               onClick={() => handleSearch(search)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 px-5 py-2 rounded-[7px] bg-blue-500 hover:bg-blue-600 text-white transition-all duration-150 font-sans text-xs font-medium active:scale-[0.97]"
+              className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 rounded-[7px] bg-blue-500 hover:bg-blue-600 text-white transition-all duration-150 font-sans text-xs font-medium active:scale-[0.97] whitespace-nowrap"
             >
               Search
             </button>
