@@ -168,17 +168,17 @@ export default function EventsPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
       <Navbar />
-      <div className="px-6 md:px-10 lg:px-16 py-8 md:py-10">
+      <div className="px-6 md:px-10 lg:px-16 py-12 md:py-14">
         {/* Page Hero */}
-        <div className="mb-8 animate-fadeUp">
+        <div className="mb-12 animate-fadeUp">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
             <span className="font-sans text-xs font-medium text-blue-500 uppercase tracking-widest">Featured</span>
           </div>
-          <h1 className="font-serif text-5xl text-[#f5f5f5]">Events</h1>
-          <p className="font-sans text-sm text-neutral-600 mt-2">Discover and explore upcoming events</p>
+          <h1 className="font-serif text-5xl text-[#f5f5f5] mb-3">Events</h1>
+          <p className="font-sans text-sm text-neutral-500">Discover and explore upcoming events</p>
         </div>
-        <div className="mb-8 space-y-4">
+        <div className="mb-10 space-y-5">
           {/* Main search input */}
           <div className="relative">
             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-600">
@@ -201,7 +201,7 @@ export default function EventsPage() {
           </div>
 
           {/* Location and date filters */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-medium text-neutral-600 mb-2 uppercase tracking-wider">Location</label>
               <input
@@ -234,7 +234,7 @@ export default function EventsPage() {
           </div>
 
           {/* Filter buttons */}
-          <div className="flex gap-3">
+          <div className="flex gap-3 pt-2">
             <button
               onClick={() => handleSearch(search)}
               className="btn-primary"
@@ -250,9 +250,9 @@ export default function EventsPage() {
           </div>
         </div>
         {!selectedEvent && searchMode === "events" && (
-          <div>
+          <div className="mt-12">
             {events.length > 0 ? (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {events.map((ev, idx) => (
                   <div
                     key={ev.id}
@@ -281,15 +281,15 @@ export default function EventsPage() {
                       </div>
                     </div>
 
-                    <div className="px-4 pt-3.5 pb-4">
-                      <h3 className="font-serif text-base font-normal text-[#f0f0f0] mb-1 line-clamp-1">
+                    <div className="px-4 py-4">
+                      <h3 className="font-serif text-base font-normal text-[#f0f0f0] mb-2 line-clamp-1">
                         {ev.name}
                       </h3>
-                      <p className="font-sans text-[12px] text-neutral-600 line-clamp-2 leading-relaxed">
+                      <p className="font-sans text-[12px] text-neutral-500 line-clamp-2 leading-relaxed">
                         {ev.description}
                       </p>
                       
-                      <div className="mt-3 pt-3 border-t border-white/[0.05] flex items-center justify-between">
+                      <div className="mt-4 pt-4 border-t border-white/[0.05] flex items-center justify-between">
                         <a href="#" className="text-blue-500 hover:text-blue-400 text-[12px] font-sans transition-colors">
                           View photos
                           <svg className="w-3 h-3 ml-1 inline group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
