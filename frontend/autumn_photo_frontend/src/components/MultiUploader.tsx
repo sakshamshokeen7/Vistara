@@ -20,7 +20,7 @@ export default function MultipleUploadPage() {
     const loadEvents = async () => {
       try {
         const data = await getEvents();
-        setEvents(data?.events ?? data ?? []);
+        setEvents(data?.results ?? data?.events ?? (Array.isArray(data) ? data : []));
       } catch (e) {
         console.error("Failed loading events", e);
         setEvents([]);
