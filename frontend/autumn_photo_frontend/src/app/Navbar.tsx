@@ -54,7 +54,7 @@ export default function Navbar() {
       {roleVal === 'ADMIN' && (
         <Link 
           to="/admin" 
-          className="w-[34px] h-[34px] rounded-full bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
+          className="w-[34px] h-[34px] rounded-[10px] bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
           title="Admin"
         >
           <LayoutDashboard size={16} />
@@ -64,7 +64,7 @@ export default function Navbar() {
       {roleVal === 'PHOTOGRAPHER' && (
         <Link 
           to="/photographer" 
-          className="w-[34px] h-[34px] rounded-full bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
+          className="w-[34px] h-[34px] rounded-[10px] bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
           title="Photographer Dashboard"
         >
           <LayoutDashboard size={16} />
@@ -73,7 +73,7 @@ export default function Navbar() {
 
       <Link 
         to="/profile" 
-        className="w-[34px] h-[34px] rounded-full bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
+        className="w-[34px] h-[34px] rounded-[10px] bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
         title="Profile"
       >
         <User size={16} />

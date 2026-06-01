@@ -74,18 +74,20 @@ export default function NotificationBell() {
 
   return (
     <div className="relative">
-      <button
+      <div
         onClick={() => setOpen(!open)}
-        className="relative w-[34px] h-[34px] rounded-full bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
+        role="button"
+        tabIndex={0}
+        className="relative w-[34px] h-[34px] !p-0 rounded-[10px] bg-white/[0.04] border border-white/[0.07] text-neutral-400 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150 cursor-pointer"
         title="Notifications"
       >
-        <Bell size={16} />
+        <Bell size={18} strokeWidth={2} />
         {unreadCount > 0 && (
           <span className="absolute -top-1 -right-1 bg-blue-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-medium">
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
-      </button>
+      </div>
 
       {open && (
         <div className="notification-dropdown absolute right-0 mt-2 w-80 bg-[#111111] border border-white/[0.08] text-[#f5f5f5] rounded-lg shadow-2xl z-50 max-h-96 overflow-y-auto">
@@ -97,14 +99,19 @@ export default function NotificationBell() {
             <div
               key={n.id}
               onClick={() => handleRead(n.id)}
-              className={`p-4 border-b border-white/[0.05] cursor-pointer transition-all duration-150 ${
+              className={`flex gap-3 p-4 border-b border-white/[0.05] cursor-pointer transition-all duration-150 ${
                 n.is_read ? "opacity-60 bg-transparent" : "bg-blue-500/[0.05] hover:bg-blue-500/[0.08]"
               }`}
             >
-              <div className="font-medium text-[13px] text-neutral-300">{n.actor_name}</div>
-              <div className="text-[12px] text-neutral-600 mt-0.5">{n.message}</div>
-              <div className="text-[11px] text-neutral-700 mt-1.5">
-                {new Date(n.created_at).toLocaleString()}
+              <div className="flex-shrink-0 mt-0.5 w-8 h-8 rounded-[10px] bg-white/[0.04] border border-white/[0.07] text-neutral-400 flex items-center justify-center">
+                <Bell size={14} />
+              </div>
+              <div className="flex-1">
+                <div className="font-medium text-[13px] text-neutral-300">{n.actor_name}</div>
+                <div className="text-[12px] text-neutral-600 mt-0.5">{n.message}</div>
+                <div className="text-[11px] text-neutral-700 mt-1.5">
+                  {new Date(n.created_at).toLocaleString()}
+                </div>
               </div>
             </div>
           ))}
