@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function AdminPanel() {
-  const role = useSelector((s:any) => s.auth.role);
+  const role = useSelector((s: any) => s.auth.role);
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -77,7 +77,7 @@ export default function AdminPanel() {
     );
   }
 
-  const submit = async (e:React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -94,7 +94,7 @@ export default function AdminPanel() {
       await axios.post('/adminpanel/create-event/', form);
       setLoading(false);
       navigate('/events');
-    } catch (err:any) {
+    } catch (err: any) {
       setLoading(false);
       setError(err.response?.data || String(err));
     }
@@ -104,17 +104,17 @@ export default function AdminPanel() {
     try {
       const res = await axios.get('/adminpanel/users/');
       setUsers(res.data.users || []);
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const refreshEvents = async () => {
     try {
       const res = await axios.get('/events/');
       setEvents(Array.isArray(res.data) ? res.data : (res.data.results || []));
-    } catch (e) {}
+    } catch (e) { }
   };
 
-  const deleteEvent = async (id:number) => {
+  const deleteEvent = async (id: number) => {
     const ok = window.confirm('Delete this event? This action cannot be undone.');
     if (!ok) return;
     try {
@@ -124,27 +124,27 @@ export default function AdminPanel() {
       } else {
         await refreshEvents();
       }
-    } catch (e:any) {
+    } catch (e: any) {
       console.error('Failed to delete event', e);
       const msg = e.response?.data || e.message || String(e);
       setError(msg);
     }
   };
 
-  const toggleUser = async (userId:number) => {
+  const toggleUser = async (userId: number) => {
     try {
       await axios.post('/adminpanel/toggle-user/', { user_id: userId });
       await refreshUsers();
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e);
     }
   };
 
-  const assignRole = async (userId:number, roleName:string) => {
+  const assignRole = async (userId: number, roleName: string) => {
     try {
       await axios.post('/adminpanel/assign-role/', { user_id: userId, role_name: roleName });
       await refreshUsers();
-    } catch (e:any) {
+    } catch (e: any) {
       console.error(e);
     }
   };
@@ -170,7 +170,7 @@ export default function AdminPanel() {
   const submitEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingEvent) return;
-    
+
     setError("");
     setLoading(true);
     try {
@@ -183,7 +183,7 @@ export default function AdminPanel() {
       form.append("is_public", editIsPublic ? "true" : "false");
       editCoordinators.forEach(id => form.append("coordinators", String(id)));
       if (editCover) form.append('cover_upload', editCover);
-      
+
       await axios.patch(`/events/${editingEvent.id}/`, form);
       setLoading(false);
       closeEditModal();
@@ -198,7 +198,7 @@ export default function AdminPanel() {
     <div className="h-screen w-screen overflow-y-auto bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white">
       <Navbar />
       <div className="px-6 md:px-10 lg:px-16 py-8 md:py-10">
-        <h1 className="text-3xl font-bold mb-4">Admin Panel — Create Event</h1>
+        <h1 className="text-3xl font-bold mb-4">Admin Panel</h1>
         <div className="mb-8 p-4 rounded bg-gray-900/50 border border-gray-800">
           <h2 className="text-xl font-semibold mb-3">Manage Users</h2>
           {usersLoading ? (
@@ -213,10 +213,10 @@ export default function AdminPanel() {
                     <div className="text-sm text-gray-400">{u.email}</div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <select defaultValue={u.role || (u.is_superuser? 'ADMIN':'PUBLIC')} onChange={(e)=>assignRole(u.id, e.target.value)} className="p-2 bg-gray-700 rounded">
-                      {ROLE_OPTIONS.map(r=> <option key={r} value={r}>{r}</option>)}
+                    <select defaultValue={u.role || (u.is_superuser ? 'ADMIN' : 'PUBLIC')} onChange={(e) => assignRole(u.id, e.target.value)} className="p-2 bg-gray-700 rounded">
+                      {ROLE_OPTIONS.map(r => <option key={r} value={r}>{r}</option>)}
                     </select>
-                    <button onClick={()=>toggleUser(u.id)} className="px-3 py-1 bg-red-600 rounded text-sm">{u.is_active ? 'Disable' : 'Enable'}</button>
+                    <button onClick={() => toggleUser(u.id)} className="px-3 py-1 bg-red-600 rounded text-sm">{u.is_active ? 'Disable' : 'Enable'}</button>
                   </div>
                 </div>
               ))}
@@ -231,7 +231,7 @@ export default function AdminPanel() {
           ) : (
             <div className="space-y-2">
               {events.length === 0 && <div className="text-gray-400">No events found.</div>}
-              {events.map((ev:any) => (
+              {events.map((ev: any) => (
                 <div key={ev.id} className="flex items-center justify-between p-3 bg-gray-800 rounded">
                   <div>
                     <div className="font-medium">{ev.name}</div>
@@ -252,46 +252,46 @@ export default function AdminPanel() {
           {error && <div className="p-3 rounded bg-red-800 text-red-200">{JSON.stringify(error)}</div>}
           <div>
             <label className="block text-sm font-medium mb-1">Name</label>
-            <input required value={name} onChange={e=>setName(e.target.value)} className="w-full p-3 rounded bg-gray-800" />
+            <input required value={name} onChange={e => setName(e.target.value)} className="w-full p-3 rounded bg-gray-800" />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Description</label>
-            <textarea value={description} onChange={e=>setDescription(e.target.value)} className="w-full p-3 rounded bg-gray-800" />
+            <textarea value={description} onChange={e => setDescription(e.target.value)} className="w-full p-3 rounded bg-gray-800" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Start datetime</label>
-              <input type="datetime-local" value={startDatetime} onChange={e=>setStartDatetime(e.target.value)} className="w-full p-2 rounded bg-gray-800" />
+              <input type="datetime-local" value={startDatetime} onChange={e => setStartDatetime(e.target.value)} className="w-full p-2 rounded bg-gray-800" />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">End datetime</label>
-              <input type="datetime-local" value={endDatetime} onChange={e=>setEndDatetime(e.target.value)} className="w-full p-2 rounded bg-gray-800" />
+              <input type="datetime-local" value={endDatetime} onChange={e => setEndDatetime(e.target.value)} className="w-full p-2 rounded bg-gray-800" />
             </div>
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Location</label>
-            <input value={location} onChange={e=>setLocation(e.target.value)} className="w-full p-3 rounded bg-gray-800" />
+            <input value={location} onChange={e => setLocation(e.target.value)} className="w-full p-3 rounded bg-gray-800" />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Cover photo</label>
-            <input type="file" accept="image/*" onChange={e=>setCover(e.target.files?.[0] || null)} />
+            <input type="file" accept="image/*" onChange={e => setCover(e.target.files?.[0] || null)} />
           </div>
 
           <div>
             <label className="block text-sm font-medium mb-1">Coordinators</label>
-            <select multiple value={selectedCoordinators.map(String)} onChange={(e)=>{
-              const opts = Array.from(e.target.selectedOptions).map(o=>Number(o.value));
+            <select multiple value={selectedCoordinators.map(String)} onChange={(e) => {
+              const opts = Array.from(e.target.selectedOptions).map(o => Number(o.value));
               setSelectedCoordinators(opts);
             }} className="w-full p-3 rounded bg-gray-800">
-              {users.map(u=> (
+              {users.map(u => (
                 <option key={u.id} value={u.id}>{u.full_name || u.email}</option>
               ))}
             </select>
             <div className="text-sm text-gray-400 mt-1">Hold Ctrl/Cmd to multi-select.</div>
           </div>
           <div className="flex items-center gap-4">
-            <label className="flex items-center gap-2"><input type="checkbox" checked={isPublic} onChange={e=>setIsPublic(e.target.checked)} /> Public</label>
-            <button type="submit" className="px-4 py-2 bg-indigo-600 rounded">{loading? 'Creating...':'Create Event'}</button>
+            <label className="flex items-center gap-2"><input type="checkbox" checked={isPublic} onChange={e => setIsPublic(e.target.checked)} /> Public</label>
+            <button type="submit" className="px-4 py-2 bg-indigo-600 rounded">{loading ? 'Creating...' : 'Create Event'}</button>
           </div>
         </form>
 
@@ -302,66 +302,66 @@ export default function AdminPanel() {
                 <h2 className="text-2xl font-bold">Edit Event</h2>
                 <button onClick={closeEditModal} className="text-gray-400 hover:text-white text-2xl">&times;</button>
               </div>
-              
+
               <form onSubmit={submitEdit} className="p-6 space-y-4">
                 {error && <div className="p-3 rounded bg-red-800 text-red-200">{JSON.stringify(error)}</div>}
-                
+
                 <div>
                   <label className="block text-sm font-medium mb-1">Name</label>
-                  <input required value={editName} onChange={e=>setEditName(e.target.value)} className="w-full p-3 rounded bg-gray-800" />
+                  <input required value={editName} onChange={e => setEditName(e.target.value)} className="w-full p-3 rounded bg-gray-800" />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium mb-1">Description</label>
-                  <textarea value={editDescription} onChange={e=>setEditDescription(e.target.value)} className="w-full p-3 rounded bg-gray-800 h-24" />
+                  <textarea value={editDescription} onChange={e => setEditDescription(e.target.value)} className="w-full p-3 rounded bg-gray-800 h-24" />
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-1">Start datetime</label>
-                    <input type="datetime-local" value={editStartDatetime} onChange={e=>setEditStartDatetime(e.target.value)} className="w-full p-2 rounded bg-gray-800" />
+                    <input type="datetime-local" value={editStartDatetime} onChange={e => setEditStartDatetime(e.target.value)} className="w-full p-2 rounded bg-gray-800" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1">End datetime</label>
-                    <input type="datetime-local" value={editEndDatetime} onChange={e=>setEditEndDatetime(e.target.value)} className="w-full p-2 rounded bg-gray-800" />
+                    <input type="datetime-local" value={editEndDatetime} onChange={e => setEditEndDatetime(e.target.value)} className="w-full p-2 rounded bg-gray-800" />
                   </div>
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium mb-1">Location</label>
-                  <input value={editLocation} onChange={e=>setEditLocation(e.target.value)} className="w-full p-3 rounded bg-gray-800" />
+                  <input value={editLocation} onChange={e => setEditLocation(e.target.value)} className="w-full p-3 rounded bg-gray-800" />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium mb-1">Cover photo</label>
-                  <input type="file" accept="image/*" onChange={e=>setEditCover(e.target.files?.[0] || null)} className="text-gray-300" />
+                  <input type="file" accept="image/*" onChange={e => setEditCover(e.target.files?.[0] || null)} className="text-gray-300" />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium mb-1">Coordinators</label>
-                  <select 
-                    multiple 
-                    value={editCoordinators.map(String)} 
-                    onChange={(e)=>{
-                      const opts = Array.from(e.target.selectedOptions).map(o=>Number(o.value));
+                  <select
+                    multiple
+                    value={editCoordinators.map(String)}
+                    onChange={(e) => {
+                      const opts = Array.from(e.target.selectedOptions).map(o => Number(o.value));
                       setEditCoordinators(opts);
-                    }} 
+                    }}
                     className="w-full p-3 rounded bg-gray-800"
                   >
-                    {users.map(u=> (
+                    {users.map(u => (
                       <option key={u.id} value={u.id}>{u.full_name || u.email}</option>
                     ))}
                   </select>
                   <div className="text-sm text-gray-400 mt-1">Hold Ctrl/Cmd to multi-select</div>
                 </div>
-                
+
                 <div className="flex items-center gap-4">
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" checked={editIsPublic} onChange={e=>setEditIsPublic(e.target.checked)} /> 
+                    <input type="checkbox" checked={editIsPublic} onChange={e => setEditIsPublic(e.target.checked)} />
                     Public
                   </label>
                 </div>
-                
+
                 <div className="flex items-center gap-3 pt-4">
                   <button type="submit" disabled={loading} className="px-6 py-2 bg-green-600 rounded font-semibold">
                     {loading ? 'Updating...' : 'Update Event'}
