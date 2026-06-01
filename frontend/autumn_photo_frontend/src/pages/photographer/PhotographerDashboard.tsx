@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../app/Navbar';
 import axios from '../../services/axiosinstances';
 import { getMediaUrl } from '../../utils/media';

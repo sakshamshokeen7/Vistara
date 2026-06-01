@@ -4,7 +4,7 @@ import Navbar from "../../app/Navbar";
 import axios from "../../services/axiosinstances";
 import PhotoModal from "../../components/PhotoModal";
 import { getMediaUrl } from "../../utils/media";
-import { Search, ArrowLeft, Grid3x3, Columns, Images, Calendar, Users } from "lucide-react";
+import { Search, ArrowLeft, Grid3x3, Columns, Images, Calendar, Users, Sparkles, Edit2 } from "lucide-react";
 
 interface Event {
   cover_upload: string;
@@ -166,65 +166,73 @@ export default function EventsPage() {
   };
 
   return (
-    <div className="h-screen w-screen overflow-y-auto bg-dark-page text-white">
+    <div className="min-h-screen w-screen overflow-y-auto bg-[#0a0a0a] text-[#f5f5f5]">
       <Navbar />
-      <div className="relative z-10 px-6 md:px-10 lg:px-16 py-8 md:py-10">
-        <div className="mb-8">
-          <div className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-2">Featured</div>
-          <h1 className="text-4xl md:text-5xl font-serif font-bold mb-2">Events</h1>
-          <p className="text-neutral-400">Discover and explore upcoming events</p>
+      <div className="px-6 md:px-10 lg:px-16 py-10">
+        {/* Hero section */}
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+            <span className="text-[11px] font-medium text-blue-500 uppercase tracking-[0.1em]">Discover Events</span>
+          </div>
+          <h1 className="text-5xl md:text-5xl font-normal text-[#f5f5f5]" style={{ fontFamily: "'Instrument Serif', serif" }}>
+            Events
+          </h1>
+          <p className="text-[13px] text-neutral-600 mt-2">Explore and discover upcoming events</p>
         </div>
-        <div className="mb-8 space-y-4">
+
+        {/* Search and filters */}
+        <div className="mb-10 space-y-3">
           {/* Main search input */}
           <div className="relative">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500">
-              <Search className="w-5 h-5" />
+            <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-600">
+              <Search className="w-4 h-4" />
             </div>
             <input
               onKeyDown={(e) => e.key === "Enter" && handleSearch(search)}
               type="text"
-              placeholder="Search..."
+              placeholder="Search by event name, description..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-32 py-3 rounded-[10px] bg-dark-surface border border-dark-border text-white placeholder-neutral-600 focus:outline-none focus:border-dark-border-focus transition-colors duration-200 font-sans text-sm"
+              className="input pl-12 pr-24"
             />
             <button
               onClick={() => handleSearch(search)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2.5 rounded-lg bg-blue-500 hover:bg-blue-600 transition-all duration-150 font-sans text-xs font-medium active:scale-[0.97] whitespace-nowrap"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-[13px] font-medium rounded-lg transition-all duration-150"
             >
               Search
             </button>
           </div>
 
           {/* Location and date filters */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs text-neutral-400 mb-2 uppercase tracking-wider">Location</label>
+              <label className="block text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5">Location</label>
               <input
                 type="text"
-                placeholder="Location..."
+                placeholder="Search by location..."
                 value={searchLocation}
                 onChange={(e) => setSearchLocation(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch(search)}
-                className="w-full px-4 py-2 rounded-lg bg-dark-surface border border-dark-border text-white placeholder-neutral-600 focus:outline-none focus:border-dark-border-focus transition-colors duration-200 font-sans text-sm"
+                className="input"
               />
             </div>
             <div>
-              <label className="block text-xs text-neutral-400 mb-2 uppercase tracking-wider">From Date</label>
+              <label className="block text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5">From Date</label>
               <input
                 type="datetime-local"
                 value={searchDateFrom}
                 onChange={(e) => setSearchDateFrom(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg bg-dark-surface border border-dark-border text-white focus:outline-none focus:border-dark-border-focus transition-colors duration-200 font-sans text-sm"
+                className="input"
               />
             </div>
             <div>
-              <label className="block text-xs text-neutral-400 mb-2 uppercase tracking-wider">To Date</label>
+              <label className="block text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5">To Date</label>
               <input
                 type="datetime-local"
                 value={searchDateTo}
                 onChange={(e) => setSearchDateTo(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg bg-dark-surface border border-dark-border text-white focus:outline-none focus:border-dark-border-focus transition-colors duration-200 font-sans text-sm"
+                className="input"
               />
             </div>
           </div>
@@ -233,67 +241,75 @@ export default function EventsPage() {
           <div className="flex gap-3">
             <button
               onClick={() => handleSearch(search)}
-              className="px-6 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 transition-all duration-200 font-medium shadow-lg text-sm"
+              className="px-5 py-2.5 bg-blue-500 hover:bg-blue-600 text-white text-[13px] font-medium rounded-lg transition-all duration-150 active:scale-[0.97]"
             >
               Apply Filters
             </button>
             <button
               onClick={clearFilters}
-              className="px-6 py-2 rounded-lg bg-neutral-800 hover:bg-neutral-700 transition-all duration-200 font-medium shadow-lg text-sm"
+              className="px-5 py-2.5 bg-transparent border border-white/[0.08] text-neutral-400 text-[13px] font-medium rounded-lg hover:text-white hover:border-white/[0.13] hover:bg-white/[0.04] transition-all duration-150"
             >
               Clear Filters
             </button>
           </div>
         </div>
+
         {!selectedEvent && searchMode === "events" && (
           <div>
             {events.length > 0 ? (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                 {events.map((ev) => (
                   <div
                     key={ev.id}
                     onClick={() => handleSelectEvent(ev)}
-                    className="group cursor-pointer card overflow-hidden animate-fadeUp hover:-translate-y-1"
+                    className="group cursor-pointer bg-[#111111] border border-white/[0.07] rounded-xl overflow-hidden hover:border-blue-500/28 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/65"
                   >
+                    {/* Image section */}
                     <div className="relative overflow-hidden h-48">
                       <img
-                        src={getMediaUrl(ev.cover_upload) || "/placeholder_event.jpg"}
+                        src={getMediaUrl(ev.cover) || "/placeholder_event.jpg"}
                         alt={ev.name}
-                        className="w-full h-full object-cover group-hover:scale-[1.06] transition-all duration-500"
+                        className="w-full h-full object-cover filter brightness-78 saturate-55 contrast-105 group-hover:brightness-90 group-hover:saturate-65 group-hover:scale-106 transition-all duration-500"
                       />
-                      <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-medium">
-                        <Users className="w-3.5 h-3.5" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent" />
+                      
+                      {/* Top-right attendee count */}
+                      <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-black/65 backdrop-blur-md border border-white/[0.09] px-2.5 py-1 rounded-full text-[11px] text-neutral-400 font-normal">
+                        <Users className="w-3 h-3" />
                         <span>{ev.coordinators?.length || 0}</span>
                       </div>
 
-                     
-                      <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-blue-500/80 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-medium">
-                        <Calendar className="w-3.5 h-3.5" />
+                      {/* Bottom-left status */}
+                      <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-black/75 backdrop-blur-md border border-blue-500/18 px-2.5 py-1 rounded-full text-[11px] text-blue-300 font-normal">
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
                         <span>Upcoming</span>
                       </div>
                     </div>
 
-                    <div className="p-5">
-                      <h2 className="text-lg font-serif font-bold mb-2 group-hover:text-blue-400 transition-colors line-clamp-1">
+                    {/* Card body */}
+                    <div className="px-4 pt-3.5 pb-4">
+                      <h2 className="text-[15px] font-normal text-[#f0f0f0] line-clamp-1" style={{ fontFamily: "'Instrument Serif', serif" }}>
                         {ev.name}
                       </h2>
-                      <p className="text-neutral-400 text-sm line-clamp-2 leading-relaxed">
+                      <p className="text-[12px] text-neutral-600 line-clamp-2 leading-relaxed mt-1">
                         {ev.description}
                       </p>
                       
-                      <div className="mt-4 flex items-center justify-between">
-                        <div className="flex items-center text-sm text-blue-400 font-medium">
+                      {/* Footer */}
+                      <div className="mt-3 pt-3 border-t border-white/[0.05] flex items-center justify-between">
+                        <div className="flex items-center text-blue-500 text-[12px] font-normal group-hover:text-blue-400 transition-colors duration-200">
                           <span>View photos</span>
-                          <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          <svg className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                           </svg>
                         </div>
                         {canEditEvent(ev) && (
                           <button
                             onClick={(e) => openEditModal(ev, e)}
-                            className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 rounded-lg text-xs font-semibold transition-colors"
+                            className="w-6 h-6 rounded flex items-center justify-center text-neutral-500 hover:text-blue-400 hover:bg-blue-500/10 border border-white/[0.07] hover:border-blue-500/25 transition-all duration-150"
+                            title="Edit event"
                           >
-                            Edit
+                            <Edit2 size={14} />
                           </button>
                         )}
                       </div>
@@ -303,11 +319,11 @@ export default function EventsPage() {
               </div>
             ) : (
               <div className="text-center py-20">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-dark-surface border border-dark-border mb-6">
-                  <Search className="w-10 h-10 text-neutral-600" />
+                <div className="w-20 h-20 rounded-full bg-blue-500/[0.06] border border-blue-500/[0.12] flex items-center justify-center mx-auto mb-6">
+                  <Search className="w-10 h-10 text-blue-900" />
                 </div>
-                <p className="text-neutral-400 text-xl">No events found</p>
-                <p className="text-neutral-500 text-sm mt-2">Try adjusting your search criteria</p>
+                <p className="text-neutral-400 text-[15px]" style={{ fontFamily: "'Instrument Serif', serif" }}>No events found</p>
+                <p className="text-neutral-600 text-[13px] mt-2">Try adjusting your search criteria</p>
               </div>
             )}
           </div>
@@ -315,35 +331,36 @@ export default function EventsPage() {
 
        
         {(selectedEvent || searchMode === "photos") && (
-          <div className="animate-fadeIn">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8 p-6 rounded-2xl bg-gray-900/50 border border-gray-800 backdrop-blur-sm">
-              <div>
-                <button
-                  className="inline-flex items-center gap-2 text-blue-400 hover:text-white-300 transition-colors mb-3 group"
-                  onClick={() => {
-                    setSelectedEvent(null);
-                    setPhotos([]);
-                    setSearchMode("events");
-                    setSearchQuery("");
-                    setSearch("");
-                    fetchEvents();
-                  }}
-                >
-                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                  <span className="font-medium">Back to events</span>
-                </button>
-                <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                  {selectedEvent ? selectedEvent.name : `Search Results: "${searchQuery}"`}
-                </h2>
-                <p className="text-gray-400 mt-2">{photos.length} photos available</p>
-              </div>
-              <div className="flex items-center gap-2 p-1.5 rounded-xl bg-gray-800/50 border border-gray-700/50">
+          <div>
+            {/* Header for photo view */}
+            <div className="mb-8 pb-6 border-b border-white/[0.05]">
+              <button
+                className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-400 transition-colors mb-4 group text-[13px] font-medium"
+                onClick={() => {
+                  setSelectedEvent(null);
+                  setPhotos([]);
+                  setSearchMode("events");
+                  setSearchQuery("");
+                  setSearch("");
+                  fetchEvents();
+                }}
+              >
+                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
+                <span>Back to events</span>
+              </button>
+              <h1 className="text-4xl font-normal text-[#f5f5f5]" style={{ fontFamily: "'Instrument Serif', serif" }}>
+                {selectedEvent ? selectedEvent.name : `Search Results`}
+              </h1>
+              <p className="text-[13px] text-neutral-600 mt-2">{photos.length} photos available</p>
+
+              {/* View toggle */}
+              <div className="mt-6 flex items-center gap-1 p-1 bg-white/[0.04] border border-white/[0.06] rounded-lg w-fit">
                 <button
                   onClick={() => setView("grid")}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 ${
+                  className={`flex items-center gap-2 px-3 py-2 text-[13px] font-medium rounded-md transition-all duration-150 ${
                     view === "grid"
-                      ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30"
-                      : "text-gray-400 hover:text-white hover:bg-gray-700/50"
+                      ? "bg-blue-500 text-white"
+                      : "text-neutral-500 hover:text-white hover:bg-white/[0.05]"
                   }`}
                 >
                   <Grid3x3 className="w-4 h-4" />
@@ -351,10 +368,10 @@ export default function EventsPage() {
                 </button>
                 <button
                   onClick={() => setView("masonry")}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 ${
+                  className={`flex items-center gap-2 px-3 py-2 text-[13px] font-medium rounded-md transition-all duration-150 ${
                     view === "masonry"
-                      ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30"
-                      : "text-gray-400 hover:text-white hover:bg-gray-700/50"
+                      ? "bg-blue-500 text-white"
+                      : "text-neutral-500 hover:text-white hover:bg-white/[0.05]"
                   }`}
                 >
                   <Columns className="w-4 h-4" />
@@ -362,10 +379,10 @@ export default function EventsPage() {
                 </button>
                 <button
                   onClick={() => setView("carousel")}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 ${
+                  className={`flex items-center gap-2 px-3 py-2 text-[13px] font-medium rounded-md transition-all duration-150 ${
                     view === "carousel"
-                      ? "bg-blue-600 text-white shadow-lg shadow-blue-600/30"
-                      : "text-gray-400 hover:text-white hover:bg-gray-700/50"
+                      ? "bg-blue-500 text-white"
+                      : "text-neutral-500 hover:text-white hover:bg-white/[0.05]"
                   }`}
                 >
                   <Images className="w-4 h-4" />
@@ -373,40 +390,41 @@ export default function EventsPage() {
                 </button>
               </div>
             </div>
+
             {photos.length > 0 ? (
               <>
                 {view === "grid" && (
-                  <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                     {photos.map((p) => (
                       <div
                         key={p.id}
                         onClick={() => { setOpenPhotoId(p.id); setOpenPhotoUrl(p.thumbnail_file); }}
-                        className="group relative rounded-xl overflow-hidden bg-gray-900 border border-gray-800 hover:border-blue-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-600/20 cursor-pointer"
+                        className="group relative rounded-xl overflow-hidden bg-[#111111] border border-white/[0.07] hover:border-blue-500/28 transition-all duration-300 hover:shadow-2xl hover:shadow-black/65 cursor-pointer"
                       >
                         <img src={getMediaUrl(p.thumbnail_file)}
                           alt="Event photo"
-                          className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                          className="w-full h-56 object-cover filter brightness-78 saturate-55 contrast-105 group-hover:brightness-90 group-hover:saturate-65 group-hover:scale-106 transition-all duration-500"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
                     ))}
                   </div>
                 )}
 
                 {view === "masonry" && (
-                  <div className="columns-2 md:columns-3 lg:columns-4 gap-6">
+                  <div className="columns-2 md:columns-3 lg:columns-4 gap-5">
                     {photos.map((p) => (
                       <div
                         key={p.id}
                         onClick={() => { setOpenPhotoId(p.id); setOpenPhotoUrl(p.thumbnail_file); }}
-                        className="group relative rounded-xl overflow-hidden bg-gray-900 border border-gray-800 hover:border-blue-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-600/20 cursor-pointer mb-6 break-inside-avoid"
+                        className="group relative rounded-xl overflow-hidden bg-[#111111] border border-white/[0.07] hover:border-blue-500/28 transition-all duration-300 hover:shadow-2xl hover:shadow-black/65 cursor-pointer mb-5 break-inside-avoid"
                       >
                         <img
                           src={getMediaUrl(p.thumbnail_file)}
                           alt="Event photo"
-                          className="w-full group-hover:scale-110 transition-transform duration-500"
+                          className="w-full filter brightness-78 saturate-55 contrast-105 group-hover:brightness-90 group-hover:saturate-65 group-hover:scale-106 transition-all duration-500"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       </div>
                     ))}
                   </div>
@@ -414,19 +432,19 @@ export default function EventsPage() {
 
                 {view === "carousel" && (
                   <div className="relative">
-                    <div className="flex overflow-x-auto gap-6 pb-6 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-purple-600 scrollbar-track-gray-800">
+                    <div className="flex overflow-x-auto gap-5 pb-4 snap-x snap-mandatory">
                       {photos.map((p) => (
                         <div
                           key={p.id}
                           onClick={() => { setOpenPhotoId(p.id); setOpenPhotoUrl(p.thumbnail_file); }}
-                          className="group relative rounded-xl overflow-hidden bg-gray-900 border border-gray-800 hover:border-purple-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-600/20 flex-shrink-0 snap-center"
+                          className="group relative rounded-xl overflow-hidden bg-[#111111] border border-white/[0.07] hover:border-blue-500/28 transition-all duration-300 hover:shadow-2xl hover:shadow-black/65 flex-shrink-0 snap-center"
                         >
                           <img
                             src={getMediaUrl(p.thumbnail_file)}
                             alt="Event photo"
-                            className="h-80 w-auto object-cover group-hover:scale-110 transition-transform duration-500"
+                            className="h-72 w-auto object-cover filter brightness-78 saturate-55 contrast-105 group-hover:brightness-90 group-hover:saturate-65 group-hover:scale-106 transition-all duration-500"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         </div>
                       ))}
                     </div>
@@ -442,69 +460,70 @@ export default function EventsPage() {
               </>
             ) : (
               <div className="text-center py-20">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-800/50 mb-6">
-                  <Images className="w-10 h-10 text-gray-600" />
+                <div className="w-20 h-20 rounded-full bg-blue-500/[0.06] border border-blue-500/[0.12] flex items-center justify-center mx-auto mb-6">
+                  <Images className="w-10 h-10 text-blue-900" />
                 </div>
-                <p className="text-gray-400 text-xl">No photos found</p>
-                <p className="text-gray-500 text-sm mt-2">Photos will appear here once uploaded</p>
+                <p className="text-neutral-400 text-[15px]" style={{ fontFamily: "'Instrument Serif', serif" }}>No photos found</p>
+                <p className="text-neutral-600 text-[13px] mt-2">Photos will appear here once uploaded</p>
               </div>
             )}
           </div>
         )}
 
+        {/* Edit Event Modal */}
         {editModalOpen && (
-          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-            <div className="bg-gray-900 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-700 shadow-2xl">
-              <div className="sticky top-0 bg-gray-900 border-b border-gray-700 p-5 flex items-center justify-between">
-                <h2 className="text-2xl font-bold">Edit Event</h2>
-                <button onClick={closeEditModal} className="text-gray-400 hover:text-white text-3xl leading-none">&times;</button>
+          <div className="fixed inset-0 bg-black/85 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className="bg-[#111111] border border-white/[0.08] rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+              <div className="sticky top-0 bg-[#111111] border-b border-white/[0.06] px-6 py-4 flex items-center justify-between">
+                <h2 className="text-[20px] font-normal text-[#f5f5f5]" style={{ fontFamily: "'Instrument Serif', serif" }}>Edit Event</h2>
+                <button onClick={closeEditModal} className="text-neutral-600 hover:text-white text-2xl transition-colors duration-150" title="Close">×</button>
               </div>
 
               <form onSubmit={submitEdit} className="p-6 space-y-5">
-                {error && <div className="p-3 rounded bg-red-900/50 border border-red-700 text-red-200">{JSON.stringify(error)}</div>}
+                {error && <div className="p-3 rounded-lg bg-red-950/40 border border-red-900/40 text-[13px] text-red-300">{JSON.stringify(error)}</div>}
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Event Name</label>
-                  <input required value={editName} onChange={(e) => setEditName(e.target.value)} className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none" />
+                  <label className="text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5 block">Event Name</label>
+                  <input required value={editName} onChange={(e) => setEditName(e.target.value)} className="input w-full" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Description</label>
-                  <textarea value={editDescription} onChange={(e) => setEditDescription(e.target.value)} rows={4} className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none" />
+                  <label className="text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5 block">Description</label>
+                  <textarea value={editDescription} onChange={(e) => setEditDescription(e.target.value)} rows={4} className="input w-full resize-none" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">Start Date & Time</label>
-                    <input type="datetime-local" value={editStartDatetime} onChange={(e) => setEditStartDatetime(e.target.value)} className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none" />
+                    <label className="text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5 block">Start Date & Time</label>
+                    <input type="datetime-local" value={editStartDatetime} onChange={(e) => setEditStartDatetime(e.target.value)} className="input w-full" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">End Date & Time</label>
-                    <input type="datetime-local" value={editEndDatetime} onChange={(e) => setEditEndDatetime(e.target.value)} className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none" />
+                    <label className="text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5 block">End Date & Time</label>
+                    <input type="datetime-local" value={editEndDatetime} onChange={(e) => setEditEndDatetime(e.target.value)} className="input w-full" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Location</label>
-                  <input value={editLocation} onChange={(e) => setEditLocation(e.target.value)} className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none" />
+                  <label className="text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5 block">Location</label>
+                  <input value={editLocation} onChange={(e) => setEditLocation(e.target.value)} className="input w-full" />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Cover Photo</label>
-                  <input type="file" accept="image/*" onChange={(e) => setEditCover(e.target.files?.[0] || null)} className="w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-green-600 file:text-white file:cursor-pointer hover:file:bg-green-700" />
-                  <p className="text-sm text-gray-500 mt-1">Leave empty to keep current cover</p>
+                  <label className="text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5 block">Cover Photo</label>
+                  <input type="file" accept="image/*" onChange={(e) => setEditCover(e.target.files?.[0] || null)} className="w-full text-neutral-400 text-[13px] file:mr-3 file:py-2 file:px-3 file:rounded file:border-0 file:bg-blue-500 file:text-white file:cursor-pointer file:font-medium file:text-[13px] hover:file:bg-blue-600 transition-colors duration-150" />
+                  <p className="text-[12px] text-neutral-600 mt-1.5">Leave empty to keep current cover</p>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <input type="checkbox" id="editPublic" checked={editIsPublic} onChange={(e) => setEditIsPublic(e.target.checked)} className="w-4 h-4 rounded" />
-                  <label htmlFor="editPublic" className="text-sm font-medium cursor-pointer">Public Event</label>
+                  <input type="checkbox" id="editPublic" checked={editIsPublic} onChange={(e) => setEditIsPublic(e.target.checked)} className="w-4 h-4 rounded border border-white/[0.07] bg-[#0f0f0f] cursor-pointer accent-blue-500" />
+                  <label htmlFor="editPublic" className="text-[13px] text-neutral-400 cursor-pointer">Public Event</label>
                 </div>
 
-                <div className="flex items-center gap-3 pt-4 border-t border-gray-800">
-                  <button type="submit" disabled={loading} className="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                <div className="flex items-center gap-3 pt-4 border-t border-white/[0.05]">
+                  <button type="submit" disabled={loading} className="px-5 py-2.5 bg-blue-500 hover:bg-blue-600 text-white text-[13px] font-medium rounded-lg disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150 active:scale-[0.97]">
                     {loading ? "Updating..." : "Update Event"}
                   </button>
-                  <button type="button" onClick={closeEditModal} className="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg font-semibold transition-colors">Cancel</button>
+                  <button type="button" onClick={closeEditModal} className="px-5 py-2.5 bg-transparent border border-white/[0.08] text-neutral-400 text-[13px] font-medium rounded-lg hover:text-white hover:border-white/[0.13] hover:bg-white/[0.04] transition-all duration-150">Cancel</button>
                 </div>
               </form>
             </div>

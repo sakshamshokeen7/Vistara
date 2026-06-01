@@ -15,6 +15,7 @@ export default function AdminPanel() {
   const [location, setLocation] = useState("");
   const [isPublic, setIsPublic] = useState(true);
   const [cover, setCover] = useState<File | null>(null);
+  const [coordinators, setCoordinators] = useState("");
   const [selectedCoordinators, setSelectedCoordinators] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");

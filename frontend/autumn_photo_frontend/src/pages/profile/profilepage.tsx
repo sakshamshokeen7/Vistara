@@ -65,18 +65,18 @@ const ProfilePage = () => {
     }, []);
 
     return (
-        <div className="h-screen w-screen overflow-y-auto bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white">
+        <div className="min-h-screen w-screen overflow-y-auto bg-[#0a0a0a] text-[#f5f5f5]">
             <Navbar />
-            <div className="px-6 md:px-10 lg:px-16 py-8 md:py-10">
-                <h1 className="text-3xl font-bold mb-4">Profile</h1>
-                <div className="mb-6 p-4 rounded-lg bg-gray-900/50 border border-gray-800">
-                    <div className="text-lg">Username: <span className="text-gray-300">{full_name|| 'Unknown'}</span></div>
-                    <div className="text-lg mt-2">Email: <span className="text-gray-300">{email || 'Unknown'}</span></div>
-                    <div className="text-lg mt-2">Role: <span className="text-gray-300">{role || localStorage.getItem('role') || 'USER'}</span></div>
+            <div className="px-6 md:px-10 lg:px-16 py-10">
+                <h1 className="text-[40px] font-normal mb-8" style={{ fontFamily: "'Instrument Serif', serif" }}>Profile</h1>
+                <div className="mb-10 p-6 rounded-xl bg-[#111111] border border-white/[0.07]">
+                    <div className="text-[15px] font-normal" style={{ fontFamily: "'Instrument Serif', serif" }}>Username: <span className="text-neutral-400">{full_name|| 'Unknown'}</span></div>
+                    <div className="text-[15px] font-normal mt-3" style={{ fontFamily: "'Instrument Serif', serif" }}>Email: <span className="text-neutral-400">{email || 'Unknown'}</span></div>
+                    <div className="text-[15px] font-normal mt-3" style={{ fontFamily: "'Instrument Serif', serif" }}>Role: <span className="text-neutral-400">{role || localStorage.getItem('role') || 'USER'}</span></div>
                 </div>
 
-                <section className="mb-8">
-                    <h2 className="text-xl font-semibold mb-3">Liked Photos</h2>
+                <section className="mb-10">
+                    <h2 className="text-[20px] font-normal mb-5" style={{ fontFamily: "'Instrument Serif', serif" }}>Liked Photos</h2>
                     {liked.length ? (
                         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                             {liked.map((p: any) => (

@@ -8,7 +8,7 @@ export const useNotificationSocket = (
 ) => {
   const socketRef = useRef<WebSocket | null>(null);
   const token = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
+    (state: RootState) => state.auth.access
   );
 
   useEffect(() => {

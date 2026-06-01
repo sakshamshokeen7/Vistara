@@ -31,5 +31,5 @@ export default function OmniportCallbackPage() {
     finalizeLogin();
   }, []);
 
-  return <div className="p-10 text-center">Logging you in…</div>;
+  return <div className="min-h-screen w-screen bg-[#0a0a0a] flex items-center justify-center text-[#f5f5f5]"><div className="text-center">Logging you in…</div></div>;
 }

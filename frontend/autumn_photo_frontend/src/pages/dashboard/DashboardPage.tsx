@@ -86,11 +86,11 @@ export default function Dashboard() {
 
   if (role === "ADMIN") {
     return (
-      <div className="h-screen w-screen overflow-y-auto bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white">
+      <div className="min-h-screen w-screen overflow-y-auto bg-[#0a0a0a] text-[#f5f5f5]">
         <Navbar />
-        <div className="px-6 md:px-10 lg:px-16 py-8">
-          <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-          <p className="text-gray-400">You are an admin. Please use the Admin Panel to manage events.</p>
+        <div className="px-6 md:px-10 lg:px-16 py-10">
+          <h1 className="text-[40px] font-normal mb-3" style={{ fontFamily: "'Instrument Serif', serif" }}>Dashboard</h1>
+          <p className="text-neutral-600 text-[13px]">You are an admin. Please use the Admin Panel to manage events.</p>
         </div>
       </div>
     );
@@ -98,55 +98,55 @@ export default function Dashboard() {
 
   if (role !== "EVENT_COORDINATOR") {
     return (
-      <div className="h-screen w-screen overflow-y-auto bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white">
+      <div className="min-h-screen w-screen overflow-y-auto bg-[#0a0a0a] text-[#f5f5f5]">
         <Navbar />
-        <div className="px-6 md:px-10 lg:px-16 py-8">
-          <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
-          <p className="text-gray-400">Welcome, {email}!</p>
+        <div className="px-6 md:px-10 lg:px-16 py-10">
+          <h1 className="text-[40px] font-normal mb-2" style={{ fontFamily: "'Instrument Serif', serif" }}>Dashboard</h1>
+          <p className="text-neutral-600 text-[13px]">Welcome, {email}!</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="h-screen w-screen overflow-y-auto bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white">
+    <div className="min-h-screen w-screen overflow-y-auto bg-[#0a0a0a] text-[#f5f5f5]">
       <Navbar />
-      <div className="px-6 md:px-10 lg:px-16 py-8 md:py-10">
-        <h1 className="text-3xl font-bold mb-6">Event Coordinator Dashboard</h1>
+      <div className="px-6 md:px-10 lg:px-16 py-10">
+        <h1 className="text-[40px] font-normal mb-8" style={{ fontFamily: "'Instrument Serif', serif" }}>Event Coordinator</h1>
 
-        <div className="mb-8 p-6 rounded-xl bg-gray-900/50 border border-gray-800">
-          <h2 className="text-2xl font-semibold mb-4">My Events</h2>
+        <div className="mb-10 p-6 rounded-xl bg-[#111111] border border-white/[0.07]">
+          <h2 className="text-[20px] font-normal mb-4" style={{ fontFamily: "'Instrument Serif', serif" }}>My Events</h2>
           {loading ? (
-            <div className="text-gray-400">Loading events...</div>
+            <div className="text-neutral-600 text-[13px]">Loading events...</div>
           ) : (
             <div className="space-y-3">
               {myEvents.length === 0 && (
-                <div className="text-gray-400 text-center py-8">
+                <div className="text-neutral-600 text-center py-8 text-[13px]">
                   No events assigned to you yet.
                 </div>
               )}
               {myEvents.map((ev: any) => (
                 <div
                   key={ev.id}
-                  className="flex items-center justify-between p-4 bg-gray-800 rounded-lg hover:bg-gray-750 transition-colors"
+                  className="flex items-center justify-between p-4 bg-[#0f0f0f] border border-white/[0.07] rounded-lg hover:border-white/[0.13] hover:bg-white/[0.02] transition-all duration-150"
                 >
                   <div className="flex-1">
-                    <div className="font-semibold text-lg">{ev.name}</div>
-                    <div className="text-sm text-gray-400 mt-1">
+                    <div className="font-normal text-[14px] text-[#f0f0f0]" style={{ fontFamily: "'Instrument Serif', serif" }}>{ev.name}</div>
+                    <div className="text-[12px] text-neutral-600 mt-1">
                       {ev.start_datetime} — {ev.end_datetime}
                     </div>
-                    <div className="text-sm text-gray-500 mt-1">{ev.location}</div>
+                    <div className="text-[12px] text-neutral-700 mt-1">{ev.location}</div>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
                     <button
                       onClick={() => navigate(`/events`)}
-                      className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-sm font-medium transition-colors"
+                      className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg text-[13px] font-medium text-white transition-all duration-150 active:scale-[0.97]"
                     >
                       View
                     </button>
                     <button
                       onClick={() => openEditModal(ev)}
-                      className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg text-sm font-medium transition-colors"
+                      className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg text-[13px] font-medium text-white transition-all duration-150 active:scale-[0.97]"
                     >
                       Edit
                     </button>
@@ -158,84 +158,84 @@ export default function Dashboard() {
         </div>
 
         {editModalOpen && (
-          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-            <div className="bg-gray-900 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-700 shadow-2xl">
-              <div className="sticky top-0 bg-gray-900 border-b border-gray-700 p-5 flex items-center justify-between">
-                <h2 className="text-2xl font-bold">Edit Event</h2>
+          <div className="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-[#111111] rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-white/[0.08] shadow-2xl">
+              <div className="sticky top-0 bg-[#111111] border-b border-white/[0.06] px-6 py-4 flex items-center justify-between">
+                <h2 className="text-[20px] font-normal text-[#f5f5f5]" style={{ fontFamily: "'Instrument Serif', serif" }}>Edit Event</h2>
                 <button
                   onClick={closeEditModal}
-                  className="text-gray-400 hover:text-white text-3xl leading-none"
+                  className="text-neutral-600 hover:text-white text-2xl transition-colors duration-150"
                 >
-                  &times;
+                  ×
                 </button>
               </div>
 
               <form onSubmit={submitEdit} className="p-6 space-y-5">
                 {error && (
-                  <div className="p-3 rounded bg-red-900/50 border border-red-700 text-red-200">
+                  <div className="p-3 rounded-lg bg-red-950/40 border border-red-900/40 text-[13px] text-red-300">
                     {JSON.stringify(error)}
                   </div>
                 )}
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Event Name</label>
+                  <label className="block text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5">Event Name</label>
                   <input
                     required
                     value={editName}
                     onChange={(e) => setEditName(e.target.value)}
-                    className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none"
+                    className="input w-full"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Description</label>
+                  <label className="block text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5">Description</label>
                   <textarea
                     value={editDescription}
                     onChange={(e) => setEditDescription(e.target.value)}
                     rows={4}
-                    className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none"
+                    className="input w-full resize-none"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">Start Date & Time</label>
+                    <label className="block text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5">Start Date & Time</label>
                     <input
                       type="datetime-local"
                       value={editStartDatetime}
                       onChange={(e) => setEditStartDatetime(e.target.value)}
-                      className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none"
+                      className="input w-full"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">End Date & Time</label>
+                    <label className="block text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5">End Date & Time</label>
                     <input
                       type="datetime-local"
                       value={editEndDatetime}
                       onChange={(e) => setEditEndDatetime(e.target.value)}
-                      className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none"
+                      className="input w-full"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Location</label>
+                  <label className="block text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5">Location</label>
                   <input
                     value={editLocation}
                     onChange={(e) => setEditLocation(e.target.value)}
-                    className="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none"
+                    className="input w-full"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Cover Photo</label>
+                  <label className="block text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600 mb-1.5">Cover Photo</label>
                   <input
                     type="file"
                     accept="image/*"
                     onChange={(e) => setEditCover(e.target.files?.[0] || null)}
-                    className="w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-green-600 file:text-white file:cursor-pointer hover:file:bg-green-700"
+                    className="w-full text-neutral-400 text-[13px] file:mr-3 file:py-2 file:px-3 file:rounded file:border-0 file:bg-blue-500 file:text-white file:cursor-pointer file:font-medium file:text-[13px] hover:file:bg-blue-600 transition-colors duration-150"
                   />
-                  <p className="text-sm text-gray-500 mt-1">Leave empty to keep current cover</p>
+                  <p className="text-[12px] text-neutral-600 mt-1.5">Leave empty to keep current cover</p>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -244,25 +244,25 @@ export default function Dashboard() {
                     id="editPublic"
                     checked={editIsPublic}
                     onChange={(e) => setEditIsPublic(e.target.checked)}
-                    className="w-4 h-4 rounded"
+                    className="w-4 h-4 rounded border border-white/[0.07] bg-[#0f0f0f] cursor-pointer accent-blue-500"
                   />
-                  <label htmlFor="editPublic" className="text-sm font-medium cursor-pointer">
+                  <label htmlFor="editPublic" className="text-[13px] text-neutral-400 cursor-pointer">
                     Public Event
                   </label>
                 </div>
 
-                <div className="flex items-center gap-3 pt-4 border-t border-gray-800">
+                <div className="flex items-center gap-3 pt-4 border-t border-white/[0.05]">
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    className="px-5 py-2.5 bg-blue-500 hover:bg-blue-600 rounded-lg text-[13px] font-medium text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150 active:scale-[0.97]"
                   >
                     {loading ? "Updating..." : "Update Event"}
                   </button>
                   <button
                     type="button"
                     onClick={closeEditModal}
-                    className="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg font-semibold transition-colors"
+                    className="px-5 py-2.5 bg-transparent border border-white/[0.08] text-neutral-400 rounded-lg text-[13px] font-medium hover:text-white hover:border-white/[0.13] hover:bg-white/[0.04] transition-all duration-150"
                   >
                     Cancel
                   </button>

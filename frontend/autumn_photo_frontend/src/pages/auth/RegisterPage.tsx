@@ -18,122 +18,113 @@ export default function RegisterPage() {
     setError("");
 
     try {
-  const res = await registerUser({
-  email,
-  password,
-  full_name: name.trim(), 
-});
+      const res = await registerUser({
+        email,
+        password,
+        full_name: name.trim(), 
+      });
 
+      alert(res.message);
+      navigate("/verify-otp", { state: { email } });
 
-  alert(res.message);
-  navigate("/verify-otp", { state: { email } });
+    } catch (err: any) {
+      const data = err.response?.data;
+      if (data && typeof data === "object") {
+        const firstKey = Object.keys(data)[0];
+        setError(data[firstKey]?.[0] || "Registration failed");
+      } else {
+        setError("Registration failed");
+      }
+    }
+    finally {
+      setLoading(false);
+    }
+  };
 
-} catch (err: any) {
-  const data = err.response?.data;
-  if (data && typeof data === "object") {
-    const firstKey = Object.keys(data)[0];
-    setError(data[firstKey]?.[0] || "Registration failed");
-  } else {
-    setError("Registration failed");
-  }
-}
-finally {
-  setLoading(false);
-}
-    };
   return (
-    <div className="h-screen w-screen flex overflow-hidden bg-dark-page">
-      <div className="flex-1 flex items-center justify-center p-6 relative">
-        <form
-          onSubmit={handleRegister}
-          className="w-full max-w-md space-y-5"
-        >
+    <div className="min-h-screen w-screen flex items-center justify-center bg-[#0a0a0a] px-4">
+      <div className="w-full max-w-md">
+        <div className="bg-[#111111] border border-white/[0.08] rounded-2xl p-8">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 flex items-center justify-center rounded-2xl bg-blue-500/10 border border-blue-500/30 shadow-xl mx-auto mb-6">
-              <Sparkles className="text-blue-500 w-8 h-8" />
+            <div className="w-16 h-16 bg-blue-500/10 border border-blue-500/18 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <Sparkles size={30} className="text-blue-300" />
             </div>
 
-            <h1 className="text-4xl font-serif font-bold text-white mb-2">Create Account</h1>
-            <p className="text-neutral-400 text-sm">Join the autumn photography community</p>
+            <h1 className="text-[28px] font-normal text-[#f5f5f5]" style={{ fontFamily: "'Instrument Serif', serif" }}>Create Account</h1>
+            <p className="text-[13px] text-neutral-600 mt-1.5">Join the autumn photography community</p>
           </div>
 
           {error && (
-            <div className="p-4 text-red-400 bg-red-500/10 border border-red-500/30 rounded-xl text-sm">
+            <div className="p-3 text-[13px] text-red-300 bg-red-950/40 border border-red-900/40 rounded-lg mb-5">
               {error}
             </div>
           )}
 
-          <div>
-            <label className="text-xs font-medium text-neutral-400 uppercase tracking-wider">Full Name</label>
-            <div className="relative mt-2">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
-              <input
-                type="text"
-                value={name}
-                required
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Full name"
-                autoComplete="name"
-                className="input-field w-full pl-11"
-              />
+          <form onSubmit={handleRegister} className="space-y-5">
+            <div className="space-y-1.5">
+              <label className="text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600">Full Name</label>
+              <div className="relative">
+                <User className="absolute left-3.5 top-2.5 text-neutral-600" size={16} />
+                <input
+                  type="text"
+                  value={name}
+                  required
+                  onChange={(e) => setName(e.target.value)}
+                  className="input pl-12"
+                  placeholder="Enter your full name"
+                  autoComplete="name"
+                />
+              </div>
             </div>
-          </div>
 
-          <div>
-            <label className="text-xs font-medium text-neutral-400 uppercase tracking-wider">Email</label>
-            <div className="relative mt-2">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                autoComplete="email"
-                inputMode="email"
-                className="input-field w-full pl-11"
-              />
+            <div className="space-y-1.5">
+              <label className="text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600">Email</label>
+              <div className="relative">
+                <Mail className="absolute left-3.5 top-2.5 text-neutral-600" size={16} />
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="input pl-12"
+                  placeholder="you@email.com"
+                  autoComplete="email"
+                  inputMode="email"
+                />
+              </div>
             </div>
-          </div>
 
-          <div>
-            <label className="text-xs font-medium text-neutral-400 uppercase tracking-wider">Password</label>
-            <div className="relative mt-2">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                autoComplete="new-password"
-                className="input-field w-full pl-11"
-              />
+            <div className="space-y-1.5">
+              <label className="text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600">Password</label>
+              <div className="relative">
+                <Lock className="absolute left-3.5 top-2.5 text-neutral-600" size={16} />
+                <input
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="input pl-10"
+                  placeholder="Choose a strong password"
+                  autoComplete="new-password"
+                />
+              </div>
             </div>
-          </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full btn-primary flex items-center justify-center gap-2 mt-6"
-          >
-            {loading ? "Creating..." : <>Register <ArrowRight size={18} /></>}
-          </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-primary w-full flex justify-center items-center disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              {loading ? "Creating..." : <>Register <ArrowRight size={16} /></>}
+            </button>
 
-          <p className="text-center text-sm text-neutral-500">
-            Already have an account?
-            <Link to="/login" className="text-blue-500 font-medium ml-1 hover:text-blue-400">
-              Login
-            </Link>
-          </p>
-        </form>
-      </div>
-      <div className="hidden lg:flex lg:w-[45%] bg-gradient-to-br from-green-600 to-green-700 justify-center items-center text-white p-12 relative overflow-hidden">
-        <div className="text-center max-w-lg space-y-6 z-10">
-          <h2 className="text-5xl font-serif font-bold">Join Viora</h2>
-          <p className="text-green-100 text-lg">
-            Register, upload & relive the best college memories.
-          </p>
+            <p className="text-center text-[13px] text-neutral-600 mt-6">
+              Already have an account?
+              <Link to="/login" className="text-blue-500 font-medium ml-1 hover:text-blue-400 transition-colors duration-150">
+                Login
+              </Link>
+            </p>
+          </form>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { getEvents } from "../services/eventservice";
 import photoService from "../services/photoService";
 import { Upload, X, Image, CheckCircle, AlertCircle } from "lucide-react";
@@ -8,11 +8,7 @@ type EventType = {
   name: string;
 };
 
-interface MultiUploaderProps {
-  onUploaded?: () => void | Promise<void>;
-}
-
-export default function MultiUploader({ onUploaded }: MultiUploaderProps) {
+export default function MultipleUploadPage() {
   const [dragOver, setDragOver] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const [events, setEvents] = useState<EventType[]>([]);
@@ -43,9 +39,8 @@ export default function MultiUploader({ onUploaded }: MultiUploaderProps) {
   }, []);
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-    setFiles((prev) => [...prev, ...Array.from(files)]);
+    if (!e.target.files) return;
+    setFiles((prev) => [...prev, ...Array.from(e.target.files)]);
   };
 
   const removeFile = (index: number) => {
@@ -70,9 +65,6 @@ export default function MultiUploader({ onUploaded }: MultiUploaderProps) {
       const res = await photoService.uploadMultiplePhotos(selectedEvent, files);
       setMessage(`Uploaded ${res.uploaded_count ?? files.length} photos`);
       setFiles([]);
-      if (onUploaded) {
-        await onUploaded();
-      }
     } catch (e: any) {
       console.error(e);
       setMessage(e?.response?.data?.detail || "Upload failed");

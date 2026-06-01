@@ -22,109 +22,97 @@ export default function LoginPage() {
     setError("");
 
     try {
-  const res = await loginUser({ email, password });
-
-  dispatch(loginSuccess(res)); 
-  navigate("/events");     
-} 
-catch (err: any) {
-  setError(err.response?.data?.detail || "Invalid credentials");
-}
-
+      const res = await loginUser({ email, password });
+      dispatch(loginSuccess(res)); 
+      navigate("/events");     
+    } 
+    catch (err: any) {
+      setError(err.response?.data?.detail || "Invalid credentials");
+    }
   };
 
   return (
-    <div className="h-screen w-screen flex overflow-hidden bg-dark-page">
-      <div className="flex-1 flex items-center justify-center p-6 relative">
-
-        <div className="relative w-full max-w-md">
+    <div className="min-h-screen w-screen flex items-center justify-center bg-[#0a0a0a] px-4">
+      <div className="w-full max-w-md">
+        <div className="bg-[#111111] border border-white/[0.08] rounded-2xl p-8">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 flex items-center justify-center rounded-2xl bg-blue-500/10 border border-blue-500/30 shadow-xl mx-auto mb-6">
-              <Sparkles className="text-blue-500 w-8 h-8" />
+            <div className="w-16 h-16 flex items-center justify-center rounded-2xl bg-blue-500/10 border border-blue-500/18 mx-auto mb-6">
+              <Sparkles className="text-blue-300 w-8 h-8" />
             </div>
-            <h1 className="text-4xl font-serif font-bold text-white mb-2">Welcome Back</h1>
-            <p className="text-neutral-400 text-sm">Login to continue</p>
+            <h1 className="text-[28px] font-normal text-[#f5f5f5]" style={{ fontFamily: "'Instrument Serif', serif" }}>Welcome Back</h1>
+            <p className="text-[13px] text-neutral-600 mt-1.5">Login to continue</p>
           </div>
           {error && (
-            <div className="p-4 mb-5 text-sm text-red-400 border border-red-500/30 bg-red-500/10 rounded-xl">
+            <div className="p-3 mb-5 text-[13px] text-red-300 border border-red-900/40 bg-red-950/40 rounded-lg">
               {error}
             </div>
           )}
           <form onSubmit={handleLogin} className="space-y-5">
-            <div className="space-y-2">
-              <label className="text-xs font-medium text-neutral-400 uppercase tracking-wider">Email</label>
+            <div className="space-y-1.5">
+              <label className="text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600">Email</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+                <Mail className="absolute left-3.5 top-2.5 text-neutral-600" size={16} />
                 <input
                   type="email"
-                  placeholder="Email"
+                  placeholder="you@example.com"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="input-field w-full pl-11"
+                  className="input pl-12"
                 />
               </div>
             </div>
-            <div className="space-y-2">
-              <label className="text-xs font-medium text-neutral-400 uppercase tracking-wider">Password</label>
+            <div className="space-y-1.5">
+              <label className="text-[10px] uppercase tracking-[0.12em] font-medium text-neutral-600">Password</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+                <Lock className="absolute left-3.5 top-2.5 text-neutral-600" size={16} />
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="Password"
+                  placeholder="••••••••"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="input-field w-full pl-11 pr-12"
+                  className="input pl-12 pr-10"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-neutral-400"
+                  className="absolute right-3.5 top-2.5 text-neutral-600 hover:text-neutral-300 transition-colors duration-150"
                 >
-                  {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                  {showPassword ? <Eye size={16} /> : <EyeOff size={16} />}
                 </button>
               </div>
             </div>
-            <label className="flex items-center gap-2 text-sm text-neutral-400">
-              <input type="checkbox" className="rounded border border-neutral-600 bg-neutral-800 checked:bg-blue-500 checked:border-blue-500" /> Remember Me
-            </label>
+            <div className="flex items-center gap-2">
+              <input type="checkbox" id="remember" className="w-4 h-4 rounded border border-white/[0.07] bg-[#0f0f0f] cursor-pointer accent-blue-500" /> 
+              <label htmlFor="remember" className="text-[13px] text-neutral-500 cursor-pointer">Remember Me</label>
+            </div>
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-primary flex items-center justify-center gap-2"
+              className="btn-primary disabled:opacity-30 disabled:cursor-not-allowed"
             >
-              {loading ? "Signing in..." : <>Sign In <ArrowRight size={18}/></>}
+              {loading ? "Signing in..." : <>Sign In <ArrowRight size={16}/></>}
             </button>
             <div className="mt-4">
-  <a
-    href="http://localhost:8000/api/accounts/omniport/login/"
-    className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-neutral-700 bg-neutral-900/50 text-neutral-300 hover:bg-neutral-900 hover:border-blue-500/30 transition"
-  >
-    <img
-      src={omniportLogo}
-      alt="Omniport"
-      className="w-6 h-6"
-    />
-    <span className="font-medium text-sm">Continue with Omniport</span>
-  </a>
-</div>
-
-
+              <a
+                href="http://localhost:8000/api/accounts/omniport/login/"
+                className="w-full flex items-center justify-center gap-3 py-2.5 px-4 rounded-lg border border-white/[0.08] bg-transparent text-neutral-400 hover:text-white hover:border-white/[0.13] hover:bg-white/[0.04] transition-all duration-150"
+              >
+                <img
+                  src={omniportLogo}
+                  alt="Omniport"
+                  className="w-5 h-5"
+                />
+                <span className="text-[13px] font-medium">Continue with Omniport</span>
+              </a>
+            </div>
           </form>
-          <p className="text-center text-sm text-neutral-500 mt-6">
+          <p className="text-center text-[13px] text-neutral-600 mt-6">
             Don't have an account?
-            <Link to="/register" className="text-blue-500 font-medium ml-1 hover:text-blue-400">
+            <Link to="/register" className="text-blue-500 font-medium ml-1 hover:text-blue-400 transition-colors duration-150">
               Register
             </Link>
-          </p>
-        </div>
-      </div>
-      <div className="hidden lg:flex lg:w-[45%] bg-gradient-to-br from-blue-600 to-blue-700 justify-center items-center text-white p-12 relative overflow-hidden">
-        <div className="text-center max-w-lg space-y-6 z-10">
-          <h2 className="text-5xl font-serif font-bold">Viora</h2>
-          <p className="text-blue-100 text-lg">
-            Upload, explore and enjoy beautiful campus memories.
           </p>
         </div>
       </div>

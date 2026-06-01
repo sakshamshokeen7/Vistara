@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "../services/axiosinstances";
 import { setRole } from "../features/auth/authSlice";
 import NotificationBell from "../components/notificationbell";
+import { LogOut, LayoutDashboard, User } from "lucide-react";
 
 export default function Navbar() {
   const isAuth = useSelector((state:any) => state.auth.isAuthenticated);
@@ -37,9 +38,11 @@ export default function Navbar() {
   const roleVal = (role || '').toString().trim().toUpperCase();
 
   return (
-    <nav className="w-full bg-slate-900 text-white p-3 flex items-center justify-between">
+    <nav className="sticky top-0 z-10 w-full bg-[#0a0a0a] border-b border-white/[0.06] h-[58px] px-6 md:px-10 flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <Link to="/events" className="text-xl font-bold">Events</Link>
+        <Link to="/events" className="text-[17px] font-normal text-[#f5f5f5] transition-colors duration-150 hover:text-white" style={{ fontFamily: "'Instrument Serif', serif" }}>
+          Autumn Photo
+        </Link>
       </div>
 
       <div className="flex items-center gap-3">
@@ -49,29 +52,48 @@ export default function Navbar() {
       <NotificationBell />
 
       {roleVal === 'ADMIN' && (
-        <Link to="/admin" className="px-3 py-1 bg-black-600 rounded">
-          Admin
+        <Link 
+          to="/admin" 
+          className="w-[34px] h-[34px] rounded-full bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
+          title="Admin"
+        >
+          <LayoutDashboard size={16} />
         </Link>
       )}
 
       {roleVal === 'PHOTOGRAPHER' && (
-        <Link to="/photographer" className="px-3 py-1 bg-black-600 rounded">
-          Photographer Dashboard
+        <Link 
+          to="/photographer" 
+          className="w-[34px] h-[34px] rounded-full bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
+          title="Photographer Dashboard"
+        >
+          <LayoutDashboard size={16} />
         </Link>
       )}
 
-      <Link to="/profile" className="px-3 py-1 bg-black-600 rounded text-white">
-        Profile
+      <Link 
+        to="/profile" 
+        className="w-[34px] h-[34px] rounded-full bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
+        title="Profile"
+      >
+        <User size={16} />
       </Link>
 
-      <button onClick={logout} className="px-3 py-1 bg-red-600 rounded">
-        Logout
+      <button 
+        onClick={logout} 
+        className="text-[13px] font-medium text-neutral-300 border border-white/[0.10] px-4 py-1.5 rounded-lg hover:text-white hover:border-white/[0.20] hover:bg-white/[0.04] transition-all duration-150 flex items-center gap-2"
+      >
+        <LogOut size={14} />
+        <span>Logout</span>
       </button>
     </>
   )}
 
   {!isAuth && (
-    <Link to="/login" className="px-3 py-1 bg-indigo-600 rounded">
+    <Link 
+      to="/login" 
+      className="text-[13px] font-medium text-white bg-blue-500 hover:bg-blue-600 px-5 py-2.5 rounded-lg transition-all duration-150"
+    >
       Login
     </Link>
   )}

@@ -60,28 +60,22 @@ export default function VerifyOtpPage() {
   };
 
   return (
-    <div className="min-h-screen w-screen flex overflow-hidden">
-      <div className="flex-1 flex items-center justify-center p-6 bg-white relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/30 via-white to-purple-50/20 z-0" />
-        <div className="absolute inset-0 opacity-[0.03] z-0 pointer-events-none">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-indigo-500 blur-3xl rounded-full" />
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500 blur-3xl rounded-full" />
-        </div>
-
-        <div className="relative z-10 w-full max-w-md">
-          <div className="text-center mb-6">
-            <div className="w-16 h-16 flex items-center justify-center rounded-2xl bg-green-500 shadow-xl mx-auto mb-4">
-              <Sparkles className="text-white w-8 h-8" />
+    <div className="min-h-screen w-screen flex items-center justify-center bg-[#0a0a0a] px-4">
+      <div className="w-full max-w-md">
+        <div className="bg-[#111111] border border-white/[0.08] rounded-2xl p-8">
+          <div className="text-center mb-8">
+            <div className="w-16 h-16 flex items-center justify-center rounded-2xl bg-blue-500/10 border border-blue-500/18 mx-auto mb-6">
+              <Sparkles className="text-blue-300 w-8 h-8" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-800">Verify your email</h1>
-            <p className="text-gray-500 text-sm">
+            <h1 className="text-[28px] font-normal text-[#f5f5f5]" style={{ fontFamily: "'Instrument Serif', serif" }}>Verify your email</h1>
+            <p className="text-[13px] text-neutral-600 mt-1.5">
               Enter the 6-digit code sent to{" "}
-              <span className="font-medium text-gray-700">{email || "your email"}</span>
+              <span className="text-neutral-400">{email || "your email"}</span>
             </p>
           </div>
 
           {error && (
-            <div className="p-3 mb-4 text-sm text-red-600 border border-red-200 bg-red-50 rounded-xl">
+            <div className="p-3 mb-5 text-[13px] text-red-300 border border-red-900/40 bg-red-950/40 rounded-lg">
               {error}
             </div>
           )}
@@ -93,13 +87,11 @@ export default function VerifyOtpPage() {
             }}
             className="space-y-6"
           >
-            <div className="flex items-center justify-center gap-3">
+            <div className="flex items-center justify-center gap-2">
               {digits.map((digit, i) => (
                 <input
                   key={i}
-                  ref={(el) => {
-                    if (el) inputsRef.current[i] = el;
-                  }}
+                  ref={(el) => (inputsRef.current[i] = el)}
                   inputMode="numeric"
                   pattern="\d*"
                   maxLength={1}
@@ -108,38 +100,28 @@ export default function VerifyOtpPage() {
                   onKeyDown={(e) => handleKeyDown(e, i)}
                   onPaste={handlePaste}
                   aria-label={`Digit ${i + 1}`}
-                  className="w-12 h-14 text-center text-xl font-medium rounded-xl border border-gray-200 bg-white text-slate-800 caret-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  className="w-11 h-13 text-center text-lg font-medium rounded-lg border border-white/[0.08] bg-[#0f0f0f] text-[#f5f5f5] placeholder-[#3a3a3a] focus:outline-none focus:border-blue-500/45 transition-all duration-150"
                 />
               ))}
             </div>
 
-            <div className="flex items-center justify-between text-sm text-gray-600">
-              <div />
-              <div className="text-sm text-gray-500">Enter the code you received</div>
-            </div>
+            <div className="text-center text-[12px] text-neutral-600">Enter the code you received</div>
 
             <button
               type="submit"
               disabled={otp.length !== 6}
-              className="btn-primary w-full flex items-center justify-center gap-2"
+              className="btn-primary w-full flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed"
             >
-              Verify <ArrowRight size={18} />
+              Verify <ArrowRight size={16} />
             </button>
           </form>
 
-          <p className="text-center text-sm text-gray-600 mt-6">
+          <p className="text-center text-[13px] text-neutral-600 mt-6">
             Need help?{" "}
-            <Link to="/support" className="text-indigo-600 font-medium ml-1 hover:underline">
+            <Link to="/support" className="text-blue-500 font-medium ml-1 hover:text-blue-400 transition-colors duration-150">
               Contact support
             </Link>
           </p>
-        </div>
-      </div>
-
-      <div className="hidden lg:flex lg:w-[45%] bg-green-600 justify-center items-center text-white p-12 relative overflow-hidden">
-        <div className="text-center max-w-lg space-y-6 z-10">
-          <h2 className="text-5xl font-bold">Viora</h2>
-          <p className="text-indigo-200 text-lg">Upload, explore and enjoy beautiful campus memories.</p>
         </div>
       </div>
     </div>

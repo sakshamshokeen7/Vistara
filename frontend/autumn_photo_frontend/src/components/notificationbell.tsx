@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Bell } from "lucide-react";
 import {
   getNotifications,
   markNotificationRead,
@@ -75,48 +76,49 @@ export default function NotificationBell() {
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="relative text-xl"
+        className="relative w-[34px] h-[34px] rounded-full bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
+        title="Notifications"
       >
-        🔔
+        <Bell size={16} />
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-red-600 text-xs px-1 rounded-full">
-            {unreadCount}
+          <span className="absolute -top-1 -right-1 bg-blue-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-medium">
+            {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
       </button>
 
       {open && (
-        <div className="notification-dropdown absolute right-0 mt-3 w-80 bg-slate-900 text-white rounded shadow-xl z-50 max-h-96 overflow-y-auto">
+        <div className="notification-dropdown absolute right-0 mt-2 w-80 bg-[#111111] border border-white/[0.08] text-[#f5f5f5] rounded-lg shadow-2xl z-50 max-h-96 overflow-y-auto">
           {notifications.length === 0 && (
-            <div className="p-3 text-gray-400">No notifications</div>
+            <div className="p-4 text-center text-neutral-600 text-[13px]">No notifications</div>
           )}
 
           {notifications.map((n) => (
             <div
               key={n.id}
               onClick={() => handleRead(n.id)}
-              className={`p-3 border-b border-slate-700 cursor-pointer ${
-                n.is_read ? "opacity-60" : "bg-slate-800"
+              className={`p-4 border-b border-white/[0.05] cursor-pointer transition-all duration-150 ${
+                n.is_read ? "opacity-60 bg-transparent" : "bg-blue-500/[0.05] hover:bg-blue-500/[0.08]"
               }`}
             >
-              <div className="font-semibold">{n.actor_name}</div>
-              <div className="text-sm">{n.message}</div>
-              <div className="text-xs text-gray-400">
+              <div className="font-medium text-[13px] text-neutral-300">{n.actor_name}</div>
+              <div className="text-[12px] text-neutral-600 mt-0.5">{n.message}</div>
+              <div className="text-[11px] text-neutral-700 mt-1.5">
                 {new Date(n.created_at).toLocaleString()}
               </div>
             </div>
           ))}
 
           {hasNextPage && (
-            <div className="p-3 border-t border-slate-700 text-center">
+            <div className="p-4 border-t border-white/[0.05] text-center">
               <button
                 onClick={handleLoadMore}
                 disabled={isLoading}
-                className="text-blue-400 hover:text-blue-300 disabled:opacity-50 text-sm"
+                className="text-blue-500 hover:text-blue-400 disabled:opacity-30 disabled:cursor-not-allowed text-[13px] font-medium transition-colors duration-150"
               >
                 {isLoading ? "Loading..." : "Load More"}
               </button>
-              <div className="text-xs text-gray-500 mt-1">
+              <div className="text-[11px] text-neutral-700 mt-2">
                 Showing {notifications.length} of {totalCount}
               </div>
             </div>
