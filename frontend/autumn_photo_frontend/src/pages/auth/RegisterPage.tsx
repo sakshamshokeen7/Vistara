@@ -70,7 +70,7 @@ export default function RegisterPage() {
                   value={name}
                   required
                   onChange={(e) => setName(e.target.value)}
-                  className="input pl-12"
+                  className="input !pl-10"
                   placeholder="Enter your full name"
                   autoComplete="name"
                 />
@@ -86,7 +86,7 @@ export default function RegisterPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="input pl-12"
+                  className="input !pl-10"
                   placeholder="you@email.com"
                   autoComplete="email"
                   inputMode="email"
@@ -103,7 +103,7 @@ export default function RegisterPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="input pl-10"
+                  className="input !pl-10"
                   placeholder="Choose a strong password"
                   autoComplete="new-password"
                 />

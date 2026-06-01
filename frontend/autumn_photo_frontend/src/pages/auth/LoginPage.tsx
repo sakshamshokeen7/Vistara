@@ -58,7 +58,7 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="input pl-12"
+                  className="input !pl-10"
                 />
               </div>
             </div>
@@ -72,7 +72,7 @@ export default function LoginPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="input pl-12 pr-10"
+                  className="input !pl-10 !pr-10"
                 />
                 <button
                   type="button"

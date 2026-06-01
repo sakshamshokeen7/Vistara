@@ -194,7 +194,7 @@ export default function EventsPage() {
               placeholder="Search by event name, description..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="input pl-12 pr-24"
+              className="input !pl-10 !pr-24"
             />
             <button
               onClick={() => handleSearch(search)}
