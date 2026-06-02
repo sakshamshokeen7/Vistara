@@ -8,9 +8,6 @@
 ![Redis](https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white)
 ![Celery](https://img.shields.io/badge/Celery-37814A?style=flat-square&logo=celery&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-![License: IMG](https://img.shields.io/badge/License-IMG-blue?style=flat-square)
-
-*Built for the IMG Autumn Assignment 2025/26*
 
 ---
 
@@ -38,7 +35,7 @@
 
 Autumn Photo is a full-stack web application designed for seamlessly managing event photography. The platform handles the entire workflow of event photo management — from event creation and bulk photo uploads to AI-powered auto-tagging, person identification, and real-time WebSocket notifications. 
 
-The application is built specifically for the Information Management Group (IMG), event coordinators, photographers, and general members. It provides a structured, role-based ecosystem where photographers can upload sets of images directly to their assigned events, coordinators can manage event details, and members can browse, search, and download memories. 
+The application is built specifically for event coordinators, photographers, and general members. It provides a structured, role-based ecosystem where photographers can upload sets of images directly to their assigned events, coordinators can manage event details, and members can browse, search, and download memories. 
 
 Technologically, the platform bridges a robust Python backend (Django, DRF, Celery, Channels) with a modern, reactive frontend (React 18, TypeScript, Tailwind). Real-time capabilities are powered by a Redis channel layer, allowing users to receive instant notifications when they are tagged in a photo or when new photos are uploaded to events they care about.
 
@@ -171,7 +168,7 @@ Technologically, the platform bridges a robust Python backend (Django, DRF, Cele
 | ADMIN | Full access — manage users, all events, all photos |
 | EVENT_COORDINATOR | Create events, edit assigned events, upload photos |
 | PHOTOGRAPHER | Upload photos to assigned events |
-| IMG_MEMBER | View all events and photos |
+| MEMBER | View all events and photos |
 | PUBLIC | View public events only |
 
 ---
@@ -447,5 +444,5 @@ We welcome community contributions! Please follow the standard branching workflo
 
 ## 🙏 Acknowledgements
 
-- Information Management Group (IMG) & the Omniport team
+- The Omniport team
 - The open-source communities powering Django, React, Celery, and Channels
