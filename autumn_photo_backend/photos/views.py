@@ -309,10 +309,24 @@ class PhotoSearchAPIView(APIView):
 
     def get(self, request):
         query = request.GET.get("q", "").strip().lower()
-        if not query or len(query) < 2:
+        
+        if not query:
+            final_photos = (
+                Photo.objects.filter(is_deleted=False)
+                .annotate(
+                    likes_count=Count("likes", distinct=True),
+                    comments_count=Count("comments", distinct=True),
+                    favourites_count=Count("favourites", distinct=True),
+                )
+                .order_by("-created_at")
+            )
+            serializer = EventPhotoSerializer(final_photos, many=True, context={"request": request})
+            return Response({"photos": serializer.data})
+
+        if len(query) < 2:
             return Response({"photos": []})
 
-        # First get photos by person tags or event
+        # First get photos by person tags, event name, description, or location
         photos_qs = (
             Photo.objects.filter(is_deleted=False)
             .filter(
@@ -320,6 +334,7 @@ class PhotoSearchAPIView(APIView):
                 | Q(person_tags__tagged_user__full_name__icontains=query)
                 | Q(event__name__icontains=query)
                 | Q(event__description__icontains=query)
+                | Q(event__location__icontains=query)
             )
             .annotate(
                 likes_count=Count("likes", distinct=True),

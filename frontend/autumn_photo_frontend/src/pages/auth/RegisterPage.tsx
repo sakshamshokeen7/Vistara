@@ -51,7 +51,7 @@ export default function RegisterPage() {
             </div>
 
             <h1 className="text-[28px] font-normal text-[#f5f5f5]" style={{ fontFamily: "'Instrument Serif', serif" }}>Create Account</h1>
-            <p className="text-[13px] text-neutral-600 mt-1.5">Join the autumn photography community</p>
+            <p className="text-[13px] text-neutral-600 mt-1.5">Join the Vistara community</p>
           </div>
 
           {error && (

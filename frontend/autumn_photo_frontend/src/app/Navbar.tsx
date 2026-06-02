@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "../services/axiosinstances";
 import { setRole } from "../features/auth/authSlice";
 import NotificationBell from "../components/notificationbell";
-import { LogOut, LayoutDashboard, User } from "lucide-react";
+import { LogOut, LayoutDashboard, User, Heart, Star, Tag, Images } from "lucide-react";
 
 export default function Navbar() {
   const isAuth = useSelector((state:any) => state.auth.isAuthenticated);
@@ -41,7 +41,7 @@ export default function Navbar() {
     <nav className="sticky top-0 z-10 w-full bg-[#0a0a0a] border-b border-white/[0.06] h-[58px] px-6 md:px-10 flex items-center justify-between">
       <div className="flex items-center gap-4">
         <Link to="/events" className="text-[17px] font-normal text-[#f5f5f5] transition-colors duration-150 hover:text-white" style={{ fontFamily: "'Instrument Serif', serif" }}>
-          Autumn Photo
+          Vistara
         </Link>
       </div>
 
@@ -70,6 +70,38 @@ export default function Navbar() {
           <LayoutDashboard size={16} />
         </Link>
       )}
+
+      <Link 
+        to="/gallery" 
+        className="w-[34px] h-[34px] rounded-[10px] bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
+        title="Global Gallery"
+      >
+        <Images size={16} />
+      </Link>
+
+      <Link 
+        to="/liked" 
+        className="w-[34px] h-[34px] rounded-[10px] bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
+        title="Liked Photos"
+      >
+        <Heart size={16} />
+      </Link>
+
+      <Link 
+        to="/favourites" 
+        className="w-[34px] h-[34px] rounded-[10px] bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
+        title="Favourites"
+      >
+        <Star size={16} />
+      </Link>
+
+      <Link 
+        to="/tagged" 
+        className="w-[34px] h-[34px] rounded-[10px] bg-white/[0.04] border border-white/[0.07] text-neutral-500 hover:bg-blue-500/10 hover:text-blue-400 hover:border-blue-500/25 flex items-center justify-center transition-all duration-150"
+        title="Tagged In"
+      >
+        <Tag size={16} />
+      </Link>
 
       <Link 
         to="/profile" 

@@ -36,7 +36,7 @@ def generate_watermarked_display(image_file):
     img = Image.open(image_file).convert("RGBA")
     draw = ImageDraw.Draw(img)
 
-    text = "Autumn Photography"
+    text = "Vistara"
     font = ImageFont.load_default()
 
     bbox = draw.textbbox((0, 0), text, font=font)

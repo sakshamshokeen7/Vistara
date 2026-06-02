@@ -1,4 +1,4 @@
-# Autumn Photo
+# Vistara
 
 > A comprehensive event photography management platform with AI-powered photo tagging, real-time notifications, and role-based access control.
 
@@ -33,7 +33,7 @@
 
 ## 🎯 Overview
 
-Autumn Photo is a full-stack web application designed for seamlessly managing event photography. The platform handles the entire workflow of event photo management — from event creation and bulk photo uploads to AI-powered auto-tagging, person identification, and real-time WebSocket notifications. 
+Vistara is a full-stack web application designed for seamlessly managing event photography. The platform handles the entire workflow of event photo management — from event creation and bulk photo uploads to AI-powered auto-tagging, person identification, and real-time WebSocket notifications. 
 
 The application is built specifically for event coordinators, photographers, and general members. It provides a structured, role-based ecosystem where photographers can upload sets of images directly to their assigned events, coordinators can manage event details, and members can browse, search, and download memories. 
 
@@ -420,7 +420,7 @@ Integration with Omniport's OAuth required addressing several quirks: token endp
 Because SQLite lacks direct support for `icontains` on JSONFields, photo searching was optimized by casting the JSON tags payload to strings, allowing simple substring queries alongside relational lookups (tagged users, event names).
 
 ### Permission Model
-Autumn Photo employs a dynamic Role-Based Access Control (RBAC) model. Specifically, `EVENT_COORDINATOR` and `PHOTOGRAPHER` roles aren't global permissions; custom permission classes explicitly check if the requesting user is linked to the specific event's coordinator list before granting mutation privileges.
+Vistara employs a dynamic Role-Based Access Control (RBAC) model. Specifically, `EVENT_COORDINATOR` and `PHOTOGRAPHER` roles aren't global permissions; custom permission classes explicitly check if the requesting user is linked to the specific event's coordinator list before granting mutation privileges.
 
 ### Image Processing Pipeline
 To guarantee snappy UI rendering, raw image uploads trigger a background Celery pipeline. A worker processes the original file through Pillow to extract EXIF data and generate optimized 1080p display sizes and 300x300 thumbnails, while simultaneously feeding the image to the AI tagging service.

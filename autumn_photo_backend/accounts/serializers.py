@@ -33,7 +33,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         otp = get_random_string(6, "0123456789")
         EmailOTP.objects.create(user=user, otp=otp)
         send_mail(
-            subject="Your OTP for Autumn Photos",
+            subject="Your OTP for Vistara",
             message=f"Your verification OTP is {otp}. It expires in 5 minutes.",
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[user.email],

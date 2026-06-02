@@ -7,6 +7,10 @@ import OTPVerifyPage from "../pages/auth/OtpVerifyPage";
 import EventsPage from "../pages/events/EventsPage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import ProfilePage from "../pages/profile/profilepage";
+import LikedPage from "../pages/profile/LikedPage";
+import FavouritesPage from "../pages/profile/FavouritesPage";
+import TaggedInPage from "../pages/profile/TaggedInPage";
+import GalleryPage from "../pages/gallery/GalleryPage";
 import AdminPanel from "../pages/admin/AdminPanel";
 import PhotographerDashboard from "../pages/photographer/PhotographerDashboard";
 import OmniportCallbackPage from "../pages/auth/OmniportCallbackPage";
@@ -30,6 +34,10 @@ export default function AppRoutes() {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/photographer" element={<PhotographerDashboard />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/liked" element={<LikedPage />} />
+        <Route path="/favourites" element={<FavouritesPage />} />
+        <Route path="/tagged" element={<TaggedInPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/admin" element={<AdminPanel />} />
       </Route>
     </Routes>
