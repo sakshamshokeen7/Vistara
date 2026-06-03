@@ -156,7 +156,8 @@ Technologically, the platform bridges a robust Python backend (Django, DRF, Cele
 - [x] Dedicated User Collections (Liked, Tagged, Favourites)
 - [x] Grid, Masonry, and Carousel photo views
 - [x] Photo modal with full detail view
-- [x] Responsive dark UI with comprehensive design system
+- [x] Completely redesigned UI with a modern dark theme and electric blue accents
+- [x] Refined Photographer and Coordinator Dashboards
 
 ### Authentication
 - [x] JWT-based auth (simplejwt)
