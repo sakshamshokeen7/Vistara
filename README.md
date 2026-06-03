@@ -145,23 +145,25 @@ Technologically, the platform bridges a robust Python backend (Django, DRF, Cele
 
 ## ✨ Features
 
+### 🚀 Recently Added Features
+- [x] Completely redesigned UI with a modern dark theme and electric blue accents
+- [x] Refined Photographer and Coordinator Dashboards
+- [x] Advanced event filtering (location and date range)
+- [x] Nested comments with real-time updates and replies
+- [x] Dedicated User Collections (Liked, Tagged, Favourites)
+- [x] OTP-based email verification during registration
+
 ### Core Features
 - [x] Event management (create, edit, delete)
 - [x] Photo upload with bulk support
 - [x] AI-powered photo tagging
 - [x] Person recognition and manual tagging
 - [x] Advanced search (by tags, users, event info)
-- [x] Advanced event filtering (location and date range)
-- [x] Nested comments with real-time updates and replies
-- [x] Dedicated User Collections (Liked, Tagged, Favourites)
 - [x] Grid, Masonry, and Carousel photo views
 - [x] Photo modal with full detail view
-- [x] Completely redesigned UI with a modern dark theme and electric blue accents
-- [x] Refined Photographer and Coordinator Dashboards
 
 ### Authentication
 - [x] JWT-based auth (simplejwt)
-- [x] OTP-based email verification during registration
 - [x] Omniport / Channeli OAuth2 integration
 - [x] Token refresh with Axios interceptors
 
