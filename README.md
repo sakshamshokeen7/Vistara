@@ -1,5 +1,9 @@
 # Vistara
 
+<div align="center">
+  <img src="docs/logo.png" alt="Vistara Logo" width="600" />
+</div>
+
 > A comprehensive event photography management platform with AI-powered photo tagging, real-time notifications, and role-based access control.
 
 ![Django 6.0](https://img.shields.io/badge/Django-6.0-092E20?style=flat-square&logo=django)
