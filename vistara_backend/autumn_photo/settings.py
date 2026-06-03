@@ -189,7 +189,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "sakshamkumarshokeen7@gmail.com"
 EMAIL_HOST_PASSWORD = "vhqlbkmyzxsbbfoc"
-DEFAULT_FROM_EMAIL = "VIORA <sakshamkumarshokeen7@gmail.com>"
+DEFAULT_FROM_EMAIL = "Vistara <sakshamkumarshokeen7@gmail.com>"
 
 SESSION_COOKIE_SAMESITE = "None"
 SESSION_COOKIE_SECURE = False  # True in production
