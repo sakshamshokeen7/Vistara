@@ -151,12 +151,16 @@ Technologically, the platform bridges a robust Python backend (Django, DRF, Cele
 - [x] AI-powered photo tagging
 - [x] Person recognition and manual tagging
 - [x] Advanced search (by tags, users, event info)
+- [x] Advanced event filtering (location and date range)
+- [x] Nested comments with real-time updates and replies
+- [x] Dedicated User Collections (Liked, Tagged, Favourites)
 - [x] Grid, Masonry, and Carousel photo views
 - [x] Photo modal with full detail view
-- [x] Responsive dark UI
+- [x] Responsive dark UI with comprehensive design system
 
 ### Authentication
 - [x] JWT-based auth (simplejwt)
+- [x] OTP-based email verification during registration
 - [x] Omniport / Channeli OAuth2 integration
 - [x] Token refresh with Axios interceptors
 
