@@ -13,7 +13,7 @@
 ![Celery](https://img.shields.io/badge/Celery-37814A?style=flat-square&logo=celery&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
 
-> 🎥 **[Watch the Demo Video on YouTube](https://youtu.be/XCiLn964HUY)**
+> 🎥 **[Watch the Demo Video on YouTube](https://youtu.be/soSOJb5oiOI)**
 
 ---
 
@@ -457,5 +457,4 @@ We welcome community contributions! Please follow the standard branching workflo
 
 ## 🙏 Acknowledgements
 
-- The Omniport team
 - The open-source communities powering Django, React, Celery, and Channels
