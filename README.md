@@ -133,11 +133,35 @@ Technologically, the platform bridges a robust Python backend (Django, DRF, Cele
 
 > The user's personal hub. Here, users can manage their account details, change their profile picture, and view their activity history.
 
-#### Step 15 — User Collections
+#### Step 15 — Favourite Photos
 
-![Step 15 - User Collections](docs/screenshots/favourites,tagged%20in,liked.png)
+![Step 15 - Favourite Photos](docs/screenshots/favourite_view.png)
 
-> A personalized gallery space where users can effortlessly access their favourite photos, images they have been tagged in, and photos they have liked across all events.
+> A dedicated collection where users can effortlessly access their favourite photos.
+
+#### Step 16 — Liked Photos
+
+![Step 16 - Liked Photos](docs/screenshots/liked_photos.png)
+
+> Easily view and manage all the photos you have liked across different events.
+
+#### Step 17 — Tagged Photos
+
+![Step 17 - Tagged Photos](docs/screenshots/tagged_view.png)
+
+> A personalized gallery showing all photos where you have been automatically or manually tagged.
+
+#### Step 18 — Gallery View
+
+![Step 18 - Gallery View](docs/screenshots/gallery_view.png)
+
+> An immersive viewing mode for browsing large collections of event photos.
+
+#### Step 19 — Photographer Uploads
+
+![Step 19 - Photographer Uploads](docs/screenshots/photographer_uploads.png)
+
+> A dedicated interface for photographers to bulk-upload their high-resolution images efficiently.
 
 > 📸 To add screenshots: save images to `docs/screenshots/` using the filenames shown above, then push to the repo. They will render automatically in this README.
 
